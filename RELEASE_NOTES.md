@@ -27,3 +27,9 @@ The Git history and this file distinguish the prior MVP from the new scientific 
 ## Camera lens increment
 
 Added real getUserMedia preview, front/rear switching, snapshot capture, tap-to-focus model requests, live Canvas motion overlays, freeze/resume and bounded opt-in auto-scan. Added local similarity tracking with an explicit lost-alignment state and camera-stream cleanup. Camera frames can enter the existing scientific review/solver path. The model key remains a pending owner setup dependency; no real-world AR registration or general-object animation capability is claimed.
+
+## Camera planning reliability
+
+Reproduced a 40-second Meta animation timeout using the reported screenshot. Planning now requests compact geometry, permits 60 seconds per attempt, and retries one transient, truncated, or invalid response. Authentication and quota errors are distinguished and not retried. Camera retries preserve the held frame and classification; stale result details are cleared. A blocked video resume keeps the valid animation on the held frame.
+
+Live verification on the reported screenshot: Meta classified circuit in 15.6 seconds and returned a validated plan with 2 tracks and 3 markers in 23.0 seconds. Hardware camera capture was not exercised by the agent. All 41 automated tests pass, including 5 provider-failure regression tests.

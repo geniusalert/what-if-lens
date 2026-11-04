@@ -1,190 +1,219 @@
+
+> what-if-lens@1.0.0 test
+> node --test tests/*.test.mjs
+
 TAP version 13
 # Subtest: camera overlay similarity fit follows translation, scale and rotation
 ok 1 - camera overlay similarity fit follows translation, scale and rotation
   ---
-  duration_ms: 2.0021
+  duration_ms: 1.8801
   ...
 # Subtest: composed tracking transforms retain the original snapshot coordinate system
 ok 2 - composed tracking transforms retain the original snapshot coordinate system
   ---
-  duration_ms: 1.4281
+  duration_ms: 1.3573
   ...
 # Subtest: local patch tracking follows a synthetic camera translation without a model call
 ok 3 - local patch tracking follows a synthetic camera translation without a model call
   ---
-  duration_ms: 20.6608
+  duration_ms: 20.669
   ...
 # Subtest: textureless or unrelated camera images do not claim an aligned overlay
 ok 4 - textureless or unrelated camera images do not claim an aligned overlay
   ---
-  duration_ms: 2.4992
+  duration_ms: 2.0707
   ...
 # Subtest: camera grayscale and permission errors have deterministic handling
 ok 5 - camera grayscale and permission errors have deterministic handling
   ---
-  duration_ms: 0.8437
+  duration_ms: 0.6942
   ...
 # Subtest: camera resource requests video only and releases tracks on stop
 ok 6 - camera resource requests video only and releases tracks on stop
   ---
-  duration_ms: 0.5952
+  duration_ms: 0.5766
   ...
 # Subtest: closing while permission is pending stops a late-granted stream
 ok 7 - closing while permission is pending stops a late-granted stream
   ---
-  duration_ms: 0.4361
+  duration_ms: 0.5833
   ...
 # Subtest: camera resource falls back for unsupported constraints, not denied permission
 ok 8 - camera resource falls back for unsupported constraints, not denied permission
   ---
-  duration_ms: 0.7358
+  duration_ms: 1.8356
   ...
 # Subtest: Incline force balance, kinetic friction, and energy close independently
 ok 9 - Incline force balance, kinetic friction, and energy close independently
   ---
-  duration_ms: 4.8669
+  duration_ms: 4.942
   ...
 # Subtest: Static rest threshold and inverse solve use a forward check
 ok 10 - Static rest threshold and inverse solve use a forward check
   ---
-  duration_ms: 0.7312
+  duration_ms: 1.5572
   ...
 # Subtest: Friction and unit constraints prevent invalid physics
 ok 11 - Friction and unit constraints prevent invalid physics
   ---
-  duration_ms: 1.0982
+  duration_ms: 1.3138
   ...
 # Subtest: Ordered series topology supports unequal resistors and conservation checks
 ok 12 - Ordered series topology supports unequal resistors and conservation checks
   ---
-  duration_ms: 1.7735
+  duration_ms: 1.5391
   ...
 # Subtest: Safe surface AST and changed frequency match independent numeric values
 ok 13 - Safe surface AST and changed frequency match independent numeric values
   ---
-  duration_ms: 5.1267
+  duration_ms: 4.4135
   ...
 # Subtest: Expression precedence, allowed functions, invalid domains and scripts
 ok 14 - Expression precedence, allowed functions, invalid domains and scripts
   ---
-  duration_ms: 0.5838
+  duration_ms: 1.8214
   ...
 # Subtest: Provenance and user review are required for inferred image quantities
 ok 15 - Provenance and user review are required for inferred image quantities
   ---
-  duration_ms: 0.3452
+  duration_ms: 0.6721
   ...
 # Subtest: Projectile inverse and deterministic seeking reproduce the same physical frame
 ok 16 - Projectile inverse and deterministic seeking reproduce the same physical frame
   ---
-  duration_ms: 0.3107
+  duration_ms: 1.0883
   ...
 # Subtest: Unknown patches and unsupported targets cannot mutate state
 ok 17 - Unknown patches and unsupported targets cannot mutate state
   ---
-  duration_ms: 0.3894
+  duration_ms: 0.9041
   ...
 # Subtest: MATH-01: exact roots, vertex and derivative
 ok 18 - MATH-01: exact roots, vertex and derivative
   ---
-  duration_ms: 2.4474
+  duration_ms: 4.937
   ...
 # Subtest: MATH-02: changing a recomputes roots and derivative
 ok 19 - MATH-02: changing a recomputes roots and derivative
   ---
-  duration_ms: 0.5826
+  duration_ms: 1.701
   ...
 # Subtest: MATH-03: signed integral differs from geometric area
 ok 20 - MATH-03: signed integral differs from geometric area
   ---
-  duration_ms: 0.2956
+  duration_ms: 0.5439
   ...
 # Subtest: Linear and constant functions have no invented vertex
 ok 21 - Linear and constant functions have no invented vertex
   ---
-  duration_ms: 0.2895
+  duration_ms: 0.5055
   ...
 # Subtest: PHY-01/02/03: circuit causal changes
 ok 22 - PHY-01/02/03: circuit causal changes
   ---
-  duration_ms: 0.3225
+  duration_ms: 0.7332
   ...
 # Subtest: PHY-04: independent projectile analytic references
 ok 23 - PHY-04: independent projectile analytic references
   ---
-  duration_ms: 0.1373
+  duration_ms: 0.2974
   ...
 # Subtest: SEC-01: expression grammar rejects scripts and unsupported operators
 ok 24 - SEC-01: expression grammar rejects scripts and unsupported operators
   ---
-  duration_ms: 1.1017
+  duration_ms: 1.3921
   ...
 # Subtest: Typed commands reject ambiguity and invalid state
 ok 25 - Typed commands reject ambiguity and invalid state
   ---
-  duration_ms: 0.6387
+  duration_ms: 1.1216
   ...
 # Subtest: API: absent key returns honest fallback, solve rejects invalid inputs
 ok 26 - API: absent key returns honest fallback, solve rejects invalid inputs
   ---
-  duration_ms: 22.6863
+  duration_ms: 29.4401
   ...
 # Subtest: Experiment create → retrieve → inverse → retrieve requires the correct owner
 ok 27 - Experiment create → retrieve → inverse → retrieve requires the correct owner
   ---
-  duration_ms: 30.9603
+  duration_ms: 37.7312
   ...
 # Subtest: Review gate rejects unconfirmed models before simulation
 ok 28 - Review gate rejects unconfirmed models before simulation
   ---
-  duration_ms: 1.666
+  duration_ms: 2.2763
   ...
 # Subtest: Real extraction contract preserves source values and emits trace using mocked HTTP only
 ok 29 - Real extraction contract preserves source values and emits trace using mocked HTTP only
   ---
-  duration_ms: 3.1718
+  duration_ms: 4.5099
   ...
 # Subtest: Prompt is a validated patch, not a direct world mutation
 ok 30 - Prompt is a validated patch, not a direct world mutation
   ---
-  duration_ms: 8.2536
+  duration_ms: 9.6731
+  ...
+# Subtest: animation retries a timeout once and returns a validated plan with evidence
+ok 31 - animation retries a timeout once and returns a validated plan with evidence
+  ---
+  duration_ms: 34.9133
+  ...
+# Subtest: authentication failures do not retry and identify the actual problem
+ok 32 - authentication failures do not retry and identify the actual problem
+  ---
+  duration_ms: 1.5404
+  ...
+# Subtest: truncated or invalid JSON is repaired with a compact second request
+ok 33 - truncated or invalid JSON is repaired with a compact second request
+  ---
+  duration_ms: 3.8735
+  ...
+# Subtest: repeated timeouts stop after two attempts with actionable message
+ok 34 - repeated timeouts stop after two attempts with actionable message
+  ---
+  duration_ms: 1.9692
+  ...
+# Subtest: temporary server errors retry, rate limits do not retry
+ok 35 - temporary server errors retry, rate limits do not retry
+  ---
+  duration_ms: 4.2194
   ...
 # Subtest: classification runs Meta first and returns no keys
-ok 31 - classification runs Meta first and returns no keys
+ok 36 - classification runs Meta first and returns no keys
   ---
-  duration_ms: 26.8646
+  duration_ms: 34.8998
   ...
 # Subtest: classification precedes separate source-anchored animation planning
-ok 32 - classification precedes separate source-anchored animation planning
+ok 37 - classification precedes separate source-anchored animation planning
   ---
-  duration_ms: 1.7262
+  duration_ms: 3.0991
   ...
 # Subtest: fallback only when allowed, with source provider disclosed
-ok 33 - fallback only when allowed, with source provider disclosed
+ok 38 - fallback only when allowed, with source provider disclosed
   ---
-  duration_ms: 1.7124
+  duration_ms: 2.5323
   ...
 # Subtest: untrusted model output cannot introduce code or out-of-image tracks
-ok 34 - untrusted model output cannot introduce code or out-of-image tracks
+ok 39 - untrusted model output cannot introduce code or out-of-image tracks
   ---
-  duration_ms: 0.2827
+  duration_ms: 0.2853
   ...
 # Subtest: missing credentials, unsupported images, and malformed input fail honestly
-ok 35 - missing credentials, unsupported images, and malformed input fail honestly
+ok 40 - missing credentials, unsupported images, and malformed input fail honestly
   ---
-  duration_ms: 0.8569
+  duration_ms: 1.435
   ...
 # Subtest: camera selection is validated and included as image focus, not executable instructions
-ok 36 - camera selection is validated and included as image focus, not executable instructions
+ok 41 - camera selection is validated and included as image focus, not executable instructions
   ---
-  duration_ms: 1.1191
+  duration_ms: 3.1249
   ...
-1..36
-# tests 36
+1..41
+# tests 41
 # suites 0
-# pass 36
+# pass 41
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 190.4949
+# duration_ms 215.3744
