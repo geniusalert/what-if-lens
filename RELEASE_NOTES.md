@@ -33,3 +33,9 @@ Added real getUserMedia preview, front/rear switching, snapshot capture, tap-to-
 Reproduced a 40-second Meta animation timeout using the reported screenshot. Planning now requests compact geometry, permits 60 seconds per attempt, and retries one transient, truncated, or invalid response. Authentication and quota errors are distinguished and not retried. Camera retries preserve the held frame and classification; stale result details are cleared. A blocked video resume keeps the valid animation on the held frame.
 
 Live verification on the reported screenshot: Meta classified circuit in 15.6 seconds and returned a validated plan with 2 tracks and 3 markers in 23.0 seconds. Hardware camera capture was not exercised by the agent. All 41 automated tests pass, including 5 provider-failure regression tests.
+
+## Captured image recovery and camera permissions
+
+Camera Mode now renders the actual captured image in a separate image element, keeps it held after inference, and makes live tracking an explicit option. Loss of alignment or stalled playback returns to that original image with its animation and identity transform. Photo upload stays inside Camera Mode, resizes before sending, and works with no camera permission. Permission errors include browser/Windows recovery instructions and a copyable direct link. Reticle corners no longer inherit the global dot styling.
+
+Client API calls validate returned plans, support cancellation and bounded deadlines, preserve provider errors and request references, handle non-JSON gateway failures, and never silently replay chargeable POST requests. Server-side bounded retry remains in effect. All 44 automated tests pass. Browser QA used an owned fixture, a real Meta classification and plan, visible captured-image animation, and no console errors. Physical device capture remains unverified by the agent.

@@ -3,217 +3,232 @@
 > node --test tests/*.test.mjs
 
 TAP version 13
-# Subtest: camera overlay similarity fit follows translation, scale and rotation
-ok 1 - camera overlay similarity fit follows translation, scale and rotation
+# Subtest: camera API validates success and does not replay chargeable requests
+ok 1 - camera API validates success and does not replay chargeable requests
   ---
-  duration_ms: 1.8801
+  duration_ms: 62.2831
+  ...
+# Subtest: camera API distinguishes quota, unreadable responses and offline failures
+ok 2 - camera API distinguishes quota, unreadable responses and offline failures
+  ---
+  duration_ms: 3.5428
+  ...
+# Subtest: camera API cancels pending work and releases its timeout
+ok 3 - camera API cancels pending work and releases its timeout
+  ---
+  duration_ms: 8.8726
+  ...
+# Subtest: camera overlay similarity fit follows translation, scale and rotation
+ok 4 - camera overlay similarity fit follows translation, scale and rotation
+  ---
+  duration_ms: 2.8238
   ...
 # Subtest: composed tracking transforms retain the original snapshot coordinate system
-ok 2 - composed tracking transforms retain the original snapshot coordinate system
+ok 5 - composed tracking transforms retain the original snapshot coordinate system
   ---
-  duration_ms: 1.3573
+  duration_ms: 1.6967
   ...
 # Subtest: local patch tracking follows a synthetic camera translation without a model call
-ok 3 - local patch tracking follows a synthetic camera translation without a model call
+ok 6 - local patch tracking follows a synthetic camera translation without a model call
   ---
-  duration_ms: 20.669
+  duration_ms: 29.4944
   ...
 # Subtest: textureless or unrelated camera images do not claim an aligned overlay
-ok 4 - textureless or unrelated camera images do not claim an aligned overlay
+ok 7 - textureless or unrelated camera images do not claim an aligned overlay
   ---
-  duration_ms: 2.0707
+  duration_ms: 2.7918
   ...
 # Subtest: camera grayscale and permission errors have deterministic handling
-ok 5 - camera grayscale and permission errors have deterministic handling
+ok 8 - camera grayscale and permission errors have deterministic handling
   ---
-  duration_ms: 0.6942
+  duration_ms: 1.4954
   ...
 # Subtest: camera resource requests video only and releases tracks on stop
-ok 6 - camera resource requests video only and releases tracks on stop
+ok 9 - camera resource requests video only and releases tracks on stop
   ---
-  duration_ms: 0.5766
+  duration_ms: 1.4284
   ...
 # Subtest: closing while permission is pending stops a late-granted stream
-ok 7 - closing while permission is pending stops a late-granted stream
+ok 10 - closing while permission is pending stops a late-granted stream
   ---
-  duration_ms: 0.5833
+  duration_ms: 1.0181
   ...
 # Subtest: camera resource falls back for unsupported constraints, not denied permission
-ok 8 - camera resource falls back for unsupported constraints, not denied permission
+ok 11 - camera resource falls back for unsupported constraints, not denied permission
   ---
-  duration_ms: 1.8356
+  duration_ms: 1.381
   ...
 # Subtest: Incline force balance, kinetic friction, and energy close independently
-ok 9 - Incline force balance, kinetic friction, and energy close independently
+ok 12 - Incline force balance, kinetic friction, and energy close independently
   ---
-  duration_ms: 4.942
+  duration_ms: 8.6039
   ...
 # Subtest: Static rest threshold and inverse solve use a forward check
-ok 10 - Static rest threshold and inverse solve use a forward check
+ok 13 - Static rest threshold and inverse solve use a forward check
   ---
-  duration_ms: 1.5572
+  duration_ms: 3.7746
   ...
 # Subtest: Friction and unit constraints prevent invalid physics
-ok 11 - Friction and unit constraints prevent invalid physics
+ok 14 - Friction and unit constraints prevent invalid physics
   ---
-  duration_ms: 1.3138
+  duration_ms: 4.039
   ...
 # Subtest: Ordered series topology supports unequal resistors and conservation checks
-ok 12 - Ordered series topology supports unequal resistors and conservation checks
+ok 15 - Ordered series topology supports unequal resistors and conservation checks
   ---
-  duration_ms: 1.5391
+  duration_ms: 2.315
   ...
 # Subtest: Safe surface AST and changed frequency match independent numeric values
-ok 13 - Safe surface AST and changed frequency match independent numeric values
+ok 16 - Safe surface AST and changed frequency match independent numeric values
   ---
-  duration_ms: 4.4135
+  duration_ms: 13.9684
   ...
 # Subtest: Expression precedence, allowed functions, invalid domains and scripts
-ok 14 - Expression precedence, allowed functions, invalid domains and scripts
+ok 17 - Expression precedence, allowed functions, invalid domains and scripts
   ---
-  duration_ms: 1.8214
+  duration_ms: 3.6569
   ...
 # Subtest: Provenance and user review are required for inferred image quantities
-ok 15 - Provenance and user review are required for inferred image quantities
+ok 18 - Provenance and user review are required for inferred image quantities
   ---
-  duration_ms: 0.6721
+  duration_ms: 1.1007
   ...
 # Subtest: Projectile inverse and deterministic seeking reproduce the same physical frame
-ok 16 - Projectile inverse and deterministic seeking reproduce the same physical frame
+ok 19 - Projectile inverse and deterministic seeking reproduce the same physical frame
   ---
-  duration_ms: 1.0883
+  duration_ms: 3.754
   ...
 # Subtest: Unknown patches and unsupported targets cannot mutate state
-ok 17 - Unknown patches and unsupported targets cannot mutate state
+ok 20 - Unknown patches and unsupported targets cannot mutate state
   ---
-  duration_ms: 0.9041
+  duration_ms: 3.3259
   ...
 # Subtest: MATH-01: exact roots, vertex and derivative
-ok 18 - MATH-01: exact roots, vertex and derivative
+ok 21 - MATH-01: exact roots, vertex and derivative
   ---
-  duration_ms: 4.937
+  duration_ms: 4.6202
   ...
 # Subtest: MATH-02: changing a recomputes roots and derivative
-ok 19 - MATH-02: changing a recomputes roots and derivative
+ok 22 - MATH-02: changing a recomputes roots and derivative
   ---
-  duration_ms: 1.701
+  duration_ms: 1.2515
   ...
 # Subtest: MATH-03: signed integral differs from geometric area
-ok 20 - MATH-03: signed integral differs from geometric area
+ok 23 - MATH-03: signed integral differs from geometric area
   ---
-  duration_ms: 0.5439
+  duration_ms: 0.6757
   ...
 # Subtest: Linear and constant functions have no invented vertex
-ok 21 - Linear and constant functions have no invented vertex
+ok 24 - Linear and constant functions have no invented vertex
   ---
-  duration_ms: 0.5055
+  duration_ms: 0.8486
   ...
 # Subtest: PHY-01/02/03: circuit causal changes
-ok 22 - PHY-01/02/03: circuit causal changes
+ok 25 - PHY-01/02/03: circuit causal changes
   ---
-  duration_ms: 0.7332
+  duration_ms: 1.0736
   ...
 # Subtest: PHY-04: independent projectile analytic references
-ok 23 - PHY-04: independent projectile analytic references
+ok 26 - PHY-04: independent projectile analytic references
   ---
-  duration_ms: 0.2974
+  duration_ms: 0.3755
   ...
 # Subtest: SEC-01: expression grammar rejects scripts and unsupported operators
-ok 24 - SEC-01: expression grammar rejects scripts and unsupported operators
+ok 27 - SEC-01: expression grammar rejects scripts and unsupported operators
   ---
-  duration_ms: 1.3921
+  duration_ms: 4.6459
   ...
 # Subtest: Typed commands reject ambiguity and invalid state
-ok 25 - Typed commands reject ambiguity and invalid state
+ok 28 - Typed commands reject ambiguity and invalid state
   ---
-  duration_ms: 1.1216
+  duration_ms: 1.3769
   ...
 # Subtest: API: absent key returns honest fallback, solve rejects invalid inputs
-ok 26 - API: absent key returns honest fallback, solve rejects invalid inputs
+ok 29 - API: absent key returns honest fallback, solve rejects invalid inputs
   ---
-  duration_ms: 29.4401
+  duration_ms: 61.0498
   ...
 # Subtest: Experiment create → retrieve → inverse → retrieve requires the correct owner
-ok 27 - Experiment create → retrieve → inverse → retrieve requires the correct owner
+ok 30 - Experiment create → retrieve → inverse → retrieve requires the correct owner
   ---
-  duration_ms: 37.7312
+  duration_ms: 76.6948
   ...
 # Subtest: Review gate rejects unconfirmed models before simulation
-ok 28 - Review gate rejects unconfirmed models before simulation
+ok 31 - Review gate rejects unconfirmed models before simulation
   ---
-  duration_ms: 2.2763
+  duration_ms: 4.8713
   ...
 # Subtest: Real extraction contract preserves source values and emits trace using mocked HTTP only
-ok 29 - Real extraction contract preserves source values and emits trace using mocked HTTP only
+ok 32 - Real extraction contract preserves source values and emits trace using mocked HTTP only
   ---
-  duration_ms: 4.5099
+  duration_ms: 11.3093
   ...
 # Subtest: Prompt is a validated patch, not a direct world mutation
-ok 30 - Prompt is a validated patch, not a direct world mutation
+ok 33 - Prompt is a validated patch, not a direct world mutation
   ---
-  duration_ms: 9.6731
+  duration_ms: 17.6504
   ...
 # Subtest: animation retries a timeout once and returns a validated plan with evidence
-ok 31 - animation retries a timeout once and returns a validated plan with evidence
+ok 34 - animation retries a timeout once and returns a validated plan with evidence
   ---
-  duration_ms: 34.9133
+  duration_ms: 71.3811
   ...
 # Subtest: authentication failures do not retry and identify the actual problem
-ok 32 - authentication failures do not retry and identify the actual problem
+ok 35 - authentication failures do not retry and identify the actual problem
   ---
-  duration_ms: 1.5404
+  duration_ms: 3.8016
   ...
 # Subtest: truncated or invalid JSON is repaired with a compact second request
-ok 33 - truncated or invalid JSON is repaired with a compact second request
+ok 36 - truncated or invalid JSON is repaired with a compact second request
   ---
-  duration_ms: 3.8735
+  duration_ms: 4.0889
   ...
 # Subtest: repeated timeouts stop after two attempts with actionable message
-ok 34 - repeated timeouts stop after two attempts with actionable message
+ok 37 - repeated timeouts stop after two attempts with actionable message
   ---
-  duration_ms: 1.9692
+  duration_ms: 6.9021
   ...
 # Subtest: temporary server errors retry, rate limits do not retry
-ok 35 - temporary server errors retry, rate limits do not retry
+ok 38 - temporary server errors retry, rate limits do not retry
   ---
-  duration_ms: 4.2194
+  duration_ms: 6.6821
   ...
 # Subtest: classification runs Meta first and returns no keys
-ok 36 - classification runs Meta first and returns no keys
+ok 39 - classification runs Meta first and returns no keys
   ---
-  duration_ms: 34.8998
+  duration_ms: 66.6375
   ...
 # Subtest: classification precedes separate source-anchored animation planning
-ok 37 - classification precedes separate source-anchored animation planning
+ok 40 - classification precedes separate source-anchored animation planning
   ---
-  duration_ms: 3.0991
+  duration_ms: 5.0515
   ...
 # Subtest: fallback only when allowed, with source provider disclosed
-ok 38 - fallback only when allowed, with source provider disclosed
+ok 41 - fallback only when allowed, with source provider disclosed
   ---
-  duration_ms: 2.5323
+  duration_ms: 7.6678
   ...
 # Subtest: untrusted model output cannot introduce code or out-of-image tracks
-ok 39 - untrusted model output cannot introduce code or out-of-image tracks
+ok 42 - untrusted model output cannot introduce code or out-of-image tracks
   ---
-  duration_ms: 0.2853
+  duration_ms: 1.116
   ...
 # Subtest: missing credentials, unsupported images, and malformed input fail honestly
-ok 40 - missing credentials, unsupported images, and malformed input fail honestly
+ok 43 - missing credentials, unsupported images, and malformed input fail honestly
   ---
-  duration_ms: 1.435
+  duration_ms: 4.7563
   ...
 # Subtest: camera selection is validated and included as image focus, not executable instructions
-ok 41 - camera selection is validated and included as image focus, not executable instructions
+ok 44 - camera selection is validated and included as image focus, not executable instructions
   ---
-  duration_ms: 3.1249
+  duration_ms: 5.5866
   ...
-1..41
-# tests 41
+1..44
+# tests 44
 # suites 0
-# pass 41
+# pass 44
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 215.3744
+# duration_ms 439.6433

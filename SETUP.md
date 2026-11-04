@@ -37,3 +37,9 @@ No live Meta request has been certified in the delivered evidence without your k
 After configuring the hosted Meta key, open the public URL on your phone in Safari or Chrome. Choose Open camera, then Enable camera and allow camera permission. Point at a clear supported diagram and tap it. Use Flip camera if the wrong lens is selected. The captured frame is analyzed and its conceptual motion overlay is shown on the camera view. Small motions are tracked approximately; re-scan when alignment is lost. Closing the camera view turns off the stream.
 
 Automatic scan is optional and sends selected steady frames to the configured model. Leave it off for tap-only capture. For exact calculations rather than an illustrative overlay, choose Open captured frame in scientific lab and review the extracted quantities before execution.
+
+### If camera access is blocked or tracking is lost
+
+Open the public camera URL directly in Chrome, Edge, or Safari. Allow Camera in the controls beside the address bar. On Windows, Settings → Privacy & security → Camera must also allow desktop apps. An embedded browser may deny camera access even when the server API works. Use **Use a photo instead** to animate in the same camera studio without a camera permission.
+
+After a scan, animation stays on the actual captured image. **Try live camera** enables approximate tracking; if it loses alignment, the original captured image automatically returns. Provider errors now show a request reference; successful request details can be expanded below the explanation.
