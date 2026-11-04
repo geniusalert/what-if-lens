@@ -22,3 +22,8 @@ Quadratic/calculus, ideal projectile and simple DC circuit labs; original notebo
 - Backend experiment IDs/history live in bounded process memory for at most two hours; exports/browser snapshots are the persistence mechanism. Worker restarts or another instance can require experiment recreation. No shared cloud experiment database or cross-device syncing is claimed.
 
 The Git history and this file distinguish the prior MVP from the new scientific compiler work. They do not certify hackathon eligibility or the official event dates.
+
+
+## Camera lens increment
+
+Added real getUserMedia preview, front/rear switching, snapshot capture, tap-to-focus model requests, live Canvas motion overlays, freeze/resume and bounded opt-in auto-scan. Added local similarity tracking with an explicit lost-alignment state and camera-stream cleanup. Camera frames can enter the existing scientific review/solver path. The model key remains a pending owner setup dependency; no real-world AR registration or general-object animation capability is claimed.

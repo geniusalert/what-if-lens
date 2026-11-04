@@ -1,145 +1,190 @@
 TAP version 13
-# Subtest: Incline force balance, kinetic friction, and energy close independently
-ok 1 - Incline force balance, kinetic friction, and energy close independently
+# Subtest: camera overlay similarity fit follows translation, scale and rotation
+ok 1 - camera overlay similarity fit follows translation, scale and rotation
   ---
-  duration_ms: 4.9345
+  duration_ms: 2.0021
+  ...
+# Subtest: composed tracking transforms retain the original snapshot coordinate system
+ok 2 - composed tracking transforms retain the original snapshot coordinate system
+  ---
+  duration_ms: 1.4281
+  ...
+# Subtest: local patch tracking follows a synthetic camera translation without a model call
+ok 3 - local patch tracking follows a synthetic camera translation without a model call
+  ---
+  duration_ms: 20.6608
+  ...
+# Subtest: textureless or unrelated camera images do not claim an aligned overlay
+ok 4 - textureless or unrelated camera images do not claim an aligned overlay
+  ---
+  duration_ms: 2.4992
+  ...
+# Subtest: camera grayscale and permission errors have deterministic handling
+ok 5 - camera grayscale and permission errors have deterministic handling
+  ---
+  duration_ms: 0.8437
+  ...
+# Subtest: camera resource requests video only and releases tracks on stop
+ok 6 - camera resource requests video only and releases tracks on stop
+  ---
+  duration_ms: 0.5952
+  ...
+# Subtest: closing while permission is pending stops a late-granted stream
+ok 7 - closing while permission is pending stops a late-granted stream
+  ---
+  duration_ms: 0.4361
+  ...
+# Subtest: camera resource falls back for unsupported constraints, not denied permission
+ok 8 - camera resource falls back for unsupported constraints, not denied permission
+  ---
+  duration_ms: 0.7358
+  ...
+# Subtest: Incline force balance, kinetic friction, and energy close independently
+ok 9 - Incline force balance, kinetic friction, and energy close independently
+  ---
+  duration_ms: 4.8669
   ...
 # Subtest: Static rest threshold and inverse solve use a forward check
-ok 2 - Static rest threshold and inverse solve use a forward check
+ok 10 - Static rest threshold and inverse solve use a forward check
   ---
-  duration_ms: 1.3229
+  duration_ms: 0.7312
   ...
 # Subtest: Friction and unit constraints prevent invalid physics
-ok 3 - Friction and unit constraints prevent invalid physics
+ok 11 - Friction and unit constraints prevent invalid physics
   ---
-  duration_ms: 0.8832
+  duration_ms: 1.0982
   ...
 # Subtest: Ordered series topology supports unequal resistors and conservation checks
-ok 4 - Ordered series topology supports unequal resistors and conservation checks
+ok 12 - Ordered series topology supports unequal resistors and conservation checks
   ---
-  duration_ms: 1.6589
+  duration_ms: 1.7735
   ...
 # Subtest: Safe surface AST and changed frequency match independent numeric values
-ok 5 - Safe surface AST and changed frequency match independent numeric values
+ok 13 - Safe surface AST and changed frequency match independent numeric values
   ---
-  duration_ms: 5.352
+  duration_ms: 5.1267
   ...
 # Subtest: Expression precedence, allowed functions, invalid domains and scripts
-ok 6 - Expression precedence, allowed functions, invalid domains and scripts
+ok 14 - Expression precedence, allowed functions, invalid domains and scripts
   ---
-  duration_ms: 0.9376
+  duration_ms: 0.5838
   ...
 # Subtest: Provenance and user review are required for inferred image quantities
-ok 7 - Provenance and user review are required for inferred image quantities
+ok 15 - Provenance and user review are required for inferred image quantities
   ---
-  duration_ms: 0.5206
+  duration_ms: 0.3452
   ...
 # Subtest: Projectile inverse and deterministic seeking reproduce the same physical frame
-ok 8 - Projectile inverse and deterministic seeking reproduce the same physical frame
+ok 16 - Projectile inverse and deterministic seeking reproduce the same physical frame
   ---
-  duration_ms: 0.7545
+  duration_ms: 0.3107
   ...
 # Subtest: Unknown patches and unsupported targets cannot mutate state
-ok 9 - Unknown patches and unsupported targets cannot mutate state
+ok 17 - Unknown patches and unsupported targets cannot mutate state
   ---
-  duration_ms: 0.8661
+  duration_ms: 0.3894
   ...
 # Subtest: MATH-01: exact roots, vertex and derivative
-ok 10 - MATH-01: exact roots, vertex and derivative
+ok 18 - MATH-01: exact roots, vertex and derivative
   ---
-  duration_ms: 2.746
+  duration_ms: 2.4474
   ...
 # Subtest: MATH-02: changing a recomputes roots and derivative
-ok 11 - MATH-02: changing a recomputes roots and derivative
+ok 19 - MATH-02: changing a recomputes roots and derivative
   ---
-  duration_ms: 0.7876
+  duration_ms: 0.5826
   ...
 # Subtest: MATH-03: signed integral differs from geometric area
-ok 12 - MATH-03: signed integral differs from geometric area
+ok 20 - MATH-03: signed integral differs from geometric area
   ---
-  duration_ms: 0.345
+  duration_ms: 0.2956
   ...
 # Subtest: Linear and constant functions have no invented vertex
-ok 13 - Linear and constant functions have no invented vertex
+ok 21 - Linear and constant functions have no invented vertex
   ---
-  duration_ms: 0.3813
+  duration_ms: 0.2895
   ...
 # Subtest: PHY-01/02/03: circuit causal changes
-ok 14 - PHY-01/02/03: circuit causal changes
+ok 22 - PHY-01/02/03: circuit causal changes
   ---
-  duration_ms: 0.7923
+  duration_ms: 0.3225
   ...
 # Subtest: PHY-04: independent projectile analytic references
-ok 15 - PHY-04: independent projectile analytic references
+ok 23 - PHY-04: independent projectile analytic references
   ---
-  duration_ms: 1.37
+  duration_ms: 0.1373
   ...
 # Subtest: SEC-01: expression grammar rejects scripts and unsupported operators
-ok 16 - SEC-01: expression grammar rejects scripts and unsupported operators
+ok 24 - SEC-01: expression grammar rejects scripts and unsupported operators
   ---
-  duration_ms: 0.6937
+  duration_ms: 1.1017
   ...
 # Subtest: Typed commands reject ambiguity and invalid state
-ok 17 - Typed commands reject ambiguity and invalid state
+ok 25 - Typed commands reject ambiguity and invalid state
   ---
-  duration_ms: 0.468
+  duration_ms: 0.6387
   ...
 # Subtest: API: absent key returns honest fallback, solve rejects invalid inputs
-ok 18 - API: absent key returns honest fallback, solve rejects invalid inputs
+ok 26 - API: absent key returns honest fallback, solve rejects invalid inputs
   ---
-  duration_ms: 25.6996
+  duration_ms: 22.6863
   ...
 # Subtest: Experiment create → retrieve → inverse → retrieve requires the correct owner
-ok 19 - Experiment create → retrieve → inverse → retrieve requires the correct owner
+ok 27 - Experiment create → retrieve → inverse → retrieve requires the correct owner
   ---
-  duration_ms: 28.798
+  duration_ms: 30.9603
   ...
 # Subtest: Review gate rejects unconfirmed models before simulation
-ok 20 - Review gate rejects unconfirmed models before simulation
+ok 28 - Review gate rejects unconfirmed models before simulation
   ---
-  duration_ms: 1.353
+  duration_ms: 1.666
   ...
 # Subtest: Real extraction contract preserves source values and emits trace using mocked HTTP only
-ok 21 - Real extraction contract preserves source values and emits trace using mocked HTTP only
+ok 29 - Real extraction contract preserves source values and emits trace using mocked HTTP only
   ---
-  duration_ms: 3.1092
+  duration_ms: 3.1718
   ...
 # Subtest: Prompt is a validated patch, not a direct world mutation
-ok 22 - Prompt is a validated patch, not a direct world mutation
+ok 30 - Prompt is a validated patch, not a direct world mutation
   ---
-  duration_ms: 6.5133
+  duration_ms: 8.2536
   ...
 # Subtest: classification runs Meta first and returns no keys
-ok 23 - classification runs Meta first and returns no keys
+ok 31 - classification runs Meta first and returns no keys
   ---
-  duration_ms: 25.3516
+  duration_ms: 26.8646
   ...
 # Subtest: classification precedes separate source-anchored animation planning
-ok 24 - classification precedes separate source-anchored animation planning
+ok 32 - classification precedes separate source-anchored animation planning
   ---
-  duration_ms: 1.6525
+  duration_ms: 1.7262
   ...
 # Subtest: fallback only when allowed, with source provider disclosed
-ok 25 - fallback only when allowed, with source provider disclosed
+ok 33 - fallback only when allowed, with source provider disclosed
   ---
-  duration_ms: 2.5374
+  duration_ms: 1.7124
   ...
 # Subtest: untrusted model output cannot introduce code or out-of-image tracks
-ok 26 - untrusted model output cannot introduce code or out-of-image tracks
+ok 34 - untrusted model output cannot introduce code or out-of-image tracks
   ---
-  duration_ms: 0.3254
+  duration_ms: 0.2827
   ...
 # Subtest: missing credentials, unsupported images, and malformed input fail honestly
-ok 27 - missing credentials, unsupported images, and malformed input fail honestly
+ok 35 - missing credentials, unsupported images, and malformed input fail honestly
   ---
-  duration_ms: 0.845
+  duration_ms: 0.8569
   ...
-1..27
-# tests 27
+# Subtest: camera selection is validated and included as image focus, not executable instructions
+ok 36 - camera selection is validated and included as image focus, not executable instructions
+  ---
+  duration_ms: 1.1191
+  ...
+1..36
+# tests 36
 # suites 0
-# pass 27
+# pass 36
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 179.3997
+# duration_ms 190.4949

@@ -76,3 +76,14 @@ Read [RELEASE_NOTES.md](RELEASE_NOTES.md) for implemented vs pending work and [D
 `npm run build` bundles the Three.js client and Worker ESM server to dist/. Sites deployment uses `.openai/hosting.json` for the existing Site identity. Keep runtime secrets out of that manifest and Git. Client assets are served from the same origin. The public demo should retain manual guest access; AI availability depends on the server secret and quota.
 
 No guarantee of hackathon eligibility, acceptance or judging outcome is implied. Final live Meta validation and narrated recording require the owner's configured account.
+
+
+## Live camera lens
+
+Choose Open camera on the landing page, or Live camera in the scientific workbench. Enable the camera using the browser permission dialog, point at a supported science diagram, and tap the diagram or Bring to life. The app captures a frame, calls the Meta-primary classifier and motion planner, then draws a conceptual animation over the video. Tap location is passed as a bounded normalized point so the model can focus on that diagram. Meta credentials remain server-side.
+
+The rear camera is preferred, with front/rear switching, freeze/resume, playback speed, reduced motion, and a photo fallback. Optional auto-scan is off by default; it waits for a steady view and is capped at three scans per camera session with at least 30 seconds between attempts. Only selected snapshots are uploaded, not a continuous video/audio stream. No audio is requested. Returning from the lens or closing the page releases all camera tracks, including permission grants that arrive after closing.
+
+A local patch tracker estimates small 2D translation, scale and rotation between frames. This is approximate image alignment, not calibrated spatial AR. Camera movements, occlusion, repetitive texture, blur or perspective change may break alignment; the overlay hides and asks for a new scan. Sparse/untextured input may remain a held frame. A frame with no localized motion plan does not receive an unrelated sample animation. It can be opened in the scientific lab for reviewed extraction.
+
+Use HTTPS and a browser that permits camera access. If the embedded app view blocks camera permission, open the public URL directly in Safari or Chrome. Physical-device capture and successful camera-to-Meta interpretation need the owner's camera permission and a configured account key; synthetic tracking/lifecycle tests do not certify that live path.

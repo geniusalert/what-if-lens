@@ -2,7 +2,7 @@
 
 ## Automated
 
-27 tests passed, 0 failed. Full TAP output: `tests.tap`.
+36 tests passed, 0 failed. Full TAP output: `tests.tap`.
 
 The earlier 14 checks were retained. New checks cover incline force balance and energy residual, static-friction threshold, forward-verified inverse solve, series topology and voltage conservation, expression AST rejection, independent surface samples and numeric gradients, provenance/review gates, deterministic seeking, owner-bound API retrieval, experimental history and mocked extraction/patch integration.
 
@@ -29,3 +29,8 @@ CPU measurements in `benchmark.json` exclude network/model latency and GPU frame
 - General nodal circuits, arbitrary diagram reconstruction or unvalidated physics domains: not supported.
 
 The included screenshots show authored/manual experiments and must not be presented as model-extraction evidence.
+
+
+## Camera increment
+
+Nine additional checks cover synthetic 2D similarity/translation tracking, transform composition, loss detection, grayscale conversion, permission error messages, video-only constraints, cleanup after closing, late permission grants, constraint fallback, and bounded tap-location routing. The camera interface and Back navigation were inspected in the browser. Phone viewport measurements confirmed a 390×844 camera root. Hardware permission/capture and a successful real camera-to-Meta call were not certified: the server key remains unconfigured and no personal camera footage was captured during QA.

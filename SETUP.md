@@ -30,3 +30,10 @@ Set optional `META_MODEL=muse-spark-1.3`. Leave `OPENROUTER_API_KEY` unset for a
 5. Run an inverse goal, compare, undo, and export the experiment.
 
 No live Meta request has been certified in the delivered evidence without your key. Automated model tests use mocked HTTP responses and are labeled accordingly.
+
+
+## Camera use
+
+After configuring the hosted Meta key, open the public URL on your phone in Safari or Chrome. Choose Open camera, then Enable camera and allow camera permission. Point at a clear supported diagram and tap it. Use Flip camera if the wrong lens is selected. The captured frame is analyzed and its conceptual motion overlay is shown on the camera view. Small motions are tracked approximately; re-scan when alignment is lost. Closing the camera view turns off the stream.
+
+Automatic scan is optional and sends selected steady frames to the configured model. Leave it off for tap-only capture. For exact calculations rather than an illustrative overlay, choose Open captured frame in scientific lab and review the extracted quantities before execution.
