@@ -1,49 +1,78 @@
 # What-If Lens
 
-A working, dependency-free math and physics web application inspired by the supplied product specification and textbook video.
+From static learning material to executable scientific experiments.
 
-## Run
+A Meta-first scientific compiler with a Three.js workbench, deterministic solvers, source review and verified inverse experiments. The earlier math/physics labs and conceptual motion studio remain available.
 
-Requires Node.js 20 or newer. No package install is needed.
+## Quick start
+
+Requires Node.js 22 or newer.
 
 ```
+npm ci
+npm run build
 npm run dev
 ```
 
-Open http://localhost:4173. Run `npm test` for analytic acceptance checks, and `npm run build` to create a portable Worker ESM deployment in `dist/`.
+Open http://localhost:4173. Choose Scientific Lab. Manual samples work without keys. See [SETUP.md](SETUP.md) to configure server-only Meta credentials. `npm test` runs all acceptance tests; `node scripts/benchmark.mjs` records local CPU timings.
 
-## Implemented
+## Supported scientific models
 
-- Ideal series DC circuit: voltage, equivalent resistance, switch, calculated current and power, animated conventional current.
-- Quadratic/linear functions: hardened polynomial grammar, roots, vertex, analytic derivative, tangent selection, integral, total geometric area, increasing region.
-- Ideal projectile: launch speed/angle/gravity, trajectory, flight time, range, height, playback and scrubber.
-- Local typed what-if grammar, prediction feedback, worked derivations, parameter correction, undo/redo, baseline comparison, local notebook, JSON import/export, refresh persistence, responsive layout and keyboard controls.
-- Image capture/upload with explicitly labeled manual fallback, plus a server-side Meta vision adapter with review and correction before simulation.
-- Server endpoints: GET /api/status, POST /api/solve, POST /api/analyze.
+| Model | Engine | Scope |
+|---|---|---|
+| Incline | Analytic Coulomb friction, release from rest | Static threshold, sliding acceleration, forces and energy residual |
+| Surface | Bounded AST evaluator, 49×49 samples | sin, cos, exp, sqrt, abs, arithmetic, literal powers up to 8; numerical gradients |
+| DC circuit | Validated ordered series network | One source, 1–8 linear resistors, ideal switch, voltage/power checks |
+| Projectile | Analytic ballistic model | Constant g, level ground, no drag |
+| Earlier quadratic lab | Analytic polynomial methods | Roots, derivative, vertex, signed integral and total area |
 
-## Connect real image understanding
+## Architecture
 
-Set MODEL_API_KEY in the server environment (or as a Sites runtime secret) and restart/redeploy. Never put an API key into client files or Git. The adapter calls Meta's documented https://api.meta.ai/v1/chat/completions endpoint with muse-spark-1.3, image content and a constrained scientific extraction schema. Model access, account quota, and a real key are required. Without the secret, the app says vision is disconnected and offers manual entry. Live inference has not been verified without a key.
+```
+Photo/manual input
+  → Meta scientific extraction (server)
+  → ScientificIR / source provenance / review gate
+  → Unit, range, topology and expression validation
+  → Deterministic solver and frameState(t)
+  → Three.js scene + plots + original-image overlay
 
-Meta documentation: https://dev.meta.ai/docs/image-understanding and https://dev.meta.ai/docs/structured-output.
+Instruction → Meta typed patch → validator → solver → history/compare
+Outcome goal → analytic inverse → forward verification → target/error
+```
 
-Images are sent to Meta only after the user chooses the analysis action. Source images stay in memory locally and are not stored in the notebook. Confirmed source text, numeric parameters, assumptions and corrections are retained in browser storage and JSON exports. No account database or cloud synchronization is implemented.
+The GPU renderer consumes solver results and does not invent authoritative physics. Playback speed changes time, not gravity or physical coefficients. Incline and projectile frames use closed-form trajectories; a 1/120-second step advances the same deterministic function. No ODE tick is needed for these analytic models. Geometry transitions are visual; paused seek renders exact target geometry. Surface extrema are sampled; gradients are finite differences with h=0.0001, not symbolic proofs.
 
-## Scientific boundaries
+The browser bundles no provider credentials. AI endpoints use protected MODEL_API_KEY and optionally an explicitly enabled OpenRouter fallback. Visible traces show provider, model, request ID, attempt status, timing and validation. Authored samples are marked with no AI inference. Do not use a configured status alone as evidence of a successful API request.
 
-The circuit has one ideal voltage source and one equivalent linear resistive load, with no arbitrary topology or nonlinear lamp model. Brightness and current dots are illustrative; the electrical values are calculated. Quadratics use analytic JavaScript formulas, not a general CAS; irrational roots and thirds render as rounded decimals. Graph viewport is fixed at x = [-4,8], y = [-12,20], so extreme parameter values may leave the view. Projectile motion assumes equal launch/landing elevations, no drag, constant g. Calculus responds to graph selection and controls rather than time, so time playback is hidden in the math lab. Current flow transport pauses/resumes flow; projectile transport scrubs physical time.
+## API
 
-Other subjects, free-form AI tutoring, SAM segmentation, voice, PDF region capture, generalized symbolic math, and photorealistic 3D are not implemented. The app's capability view discloses this scope. This is a functional MVP, not the universal long-term platform.
+- POST `/api/analyze`: image → Meta candidate IR and uncertainty.
+- POST `/api/validate`: reviewed candidate → validated IR or actionable error.
+- POST `/api/experiments`: reviewed IR → ID, calculated run, metrics.
+- GET `/api/experiments/:id`: same-owner in-memory snapshot.
+- POST `/api/experiments/:id/modify`: natural-language instruction → Meta typed patch → re-solved run.
+- POST `/api/experiments/:id/inverse`: allowed goal → analytic proposal and forward-verification evidence.
+- Earlier `/api/solve`, `/api/status`, `/api/classify`, `/api/animate` remain for compatibility and the conceptual gallery.
 
-The server proxy is intended for the owner-private deployment. Before any public rollout add authentication, rate limiting and usage quotas to the image inference endpoint.
+Public experiments use a per-browser random owner token in X-Experiment-Owner. The platform supplies authenticated identity on private Sites. Server records are bounded, ephemeral, instance-local and expire after two hours; browser snapshots and exported JSON provide persistence. A restart or another instance can require recreation from the browser state. There is no shared cloud database.
 
+## Reliability and limits
 
-## Living textbook update
+Model outputs are data only: safe AST and whitelisted patches, no eval or generated scripts. Review rejects inferred values until explicitly confirmed. Topology validation rejects ambiguous/non-series wiring. Uploads are limited and re-encoded locally. No photos are persisted by this application server; the selected AI provider processes the uploaded image. Browser snapshots retain source transcription and parameters, not the original image.
 
-Upload now calls `/api/classify` first and `/api/animate` second. Meta Muse Spark identifies the image family, then returns a bounded declarative motion plan with normalized coordinates on the original image. No generated JavaScript is executed. Schema and runtime validation limit track count, point count, coordinates, labels and speeds.
+AI calls have timeouts, a bounded transient retry, and best-effort per-instance request budgets. These do not replace provider billing caps. The app reduces pixel ratio when observed FPS drops. Browser FPS is an observation, not a claim about other hardware.
 
-The new Canvas motion studio renders animated overlays on the uploaded image and separate illustrative studio templates. The studio includes a perspective circuit with glowing lamp and flowing conventional-current particles, a pendulum and travelling wave, plus basic ray, rotation, trajectory and graph illustrations. Source overlays are AI-estimated geometry, not calibrated tracking or verified arbitrary physics. Illustrated studio templates do not reconstruct arbitrary uploaded apparatus. Non-educational or unsupported images fail explicitly. This is procedural 2.5D animation, not an image-to-3D mesh or generative video service.
+Read [RELEASE_NOTES.md](RELEASE_NOTES.md) for implemented vs pending work and [DEMO.md](DEMO.md) for the three-minute recording plan. Record demo uses a user-selected tab/screen and downloads locally; it does not fabricate video or automatically submit anything.
 
-Meta is primary: `MODEL_API_KEY`, optional `META_MODEL`. OpenRouter is optional: `OPENROUTER_API_KEY`, optional `OPENROUTER_MODEL` (default `google/gemini-2.5-flash`). Configure `ALLOW_OPENROUTER_FALLBACK=true` only when image transmission to OpenRouter is intended. The app also supports tab-memory keys via Connect AI; these go through the same-origin backend, are never stored in localStorage or exports, and are cleared when the tab reloads. The fallback checkbox explicitly opts into OpenRouter after a Meta error. Provider errors and model-schema failures preserve the current experiment.
+## Evidence
 
-Live provider inference requires an actual account key and has not been verified without one. Automated provider tests use mocked HTTP responses, covering Meta precedence, separate classify/plan calls, optional fallback and malformed model output.
+- `tests/`: regressions, independent analytic references, AST rejection tests, inverse forward checks and mocked provider integration.
+- `evidence/benchmark.json`: actual local CPU measurements, excluding model latency and GPU time.
+- `fixtures/`: independently authored inputs and expected extraction targets. Classification on these has **not** been measured against a live Meta account without a key.
+- `evidence/`: screenshots/test report when present. Model mocks are explicitly not live inference evidence.
+
+## Deployment
+
+`npm run build` bundles the Three.js client and Worker ESM server to dist/. Sites deployment uses `.openai/hosting.json` for the existing Site identity. Keep runtime secrets out of that manifest and Git. Client assets are served from the same origin. The public demo should retain manual guest access; AI availability depends on the server secret and quota.
+
+No guarantee of hackathon eligibility, acceptance or judging outcome is implied. Final live Meta validation and narrated recording require the owner's configured account.

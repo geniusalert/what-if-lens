@@ -1,0 +1,88 @@
+[
+  {
+    "id": "incline-22",
+    "template": "incline",
+    "expected": {
+      "angle": 22,
+      "mass": 3,
+      "muStatic": 0.15,
+      "muKinetic": 0.1,
+      "g": 9.81
+    },
+    "classificationEvaluatedLive": false
+  },
+  {
+    "id": "incline-40",
+    "template": "incline",
+    "expected": {
+      "angle": 40,
+      "mass": 1.5,
+      "muStatic": 0.4,
+      "muKinetic": 0.3,
+      "g": 9.81
+    },
+    "classificationEvaluatedLive": false
+  },
+  {
+    "id": "surface-sine",
+    "template": "surface",
+    "expected": {
+      "expression": "sin(2*x)*cos(y)"
+    },
+    "classificationEvaluatedLive": false
+  },
+  {
+    "id": "surface-saddle",
+    "template": "surface",
+    "expected": {
+      "expression": "x^2-y^2"
+    },
+    "classificationEvaluatedLive": false
+  },
+  {
+    "id": "series-two",
+    "template": "circuit",
+    "expected": {
+      "voltage": 12,
+      "resistances": [
+        4,
+        8
+      ],
+      "closed": true
+    },
+    "classificationEvaluatedLive": false
+  },
+  {
+    "id": "series-open",
+    "template": "circuit",
+    "expected": {
+      "voltage": 6,
+      "resistances": [
+        3,
+        9
+      ],
+      "closed": false
+    },
+    "classificationEvaluatedLive": false
+  },
+  {
+    "id": "projectile-24",
+    "template": "projectile",
+    "expected": {
+      "speed": 24,
+      "angle": 45,
+      "g": 9.81
+    },
+    "classificationEvaluatedLive": false
+  },
+  {
+    "id": "projectile-15",
+    "template": "projectile",
+    "expected": {
+      "speed": 15,
+      "angle": 60,
+      "g": 9.81
+    },
+    "classificationEvaluatedLive": false
+  }
+]

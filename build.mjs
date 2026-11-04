@@ -1,10 +1,9 @@
-import {readFile,mkdir,writeFile,copyFile} from 'node:fs/promises';
-const files=['index.html','style.css','app.js','science.js','studio.js'];
+import {readFile,mkdir,copyFile,writeFile} from 'node:fs/promises';
+import {build} from 'esbuild';
+await build({entryPoints:['src/lab3d.js'],bundle:true,format:'esm',minify:true,outfile:'src/lab3d.bundle.js',target:'es2022',legalComments:'eof'});
+const files=['index.html','style.css','app.js','science.js','studio.js','lab3d.bundle.js'];
 const assets=Object.fromEntries(await Promise.all(files.map(async f=>['/'+(f==='index.html'?'':f),await readFile('src/'+f,'utf8')])));
-const backend=(await readFile('src/backend.js','utf8')).replace(/^import .*?;\r?\n/gm,'');
-const vision=await readFile('src/vision.js','utf8');
-const science=await readFile('src/science.js','utf8');
 await mkdir('dist/server',{recursive:true});await mkdir('dist/.openai',{recursive:true});
-await writeFile('dist/server/index.js',`const assets=${JSON.stringify(assets)};\n${science}\n${vision}\n${backend}`);
-await copyFile('.openai/hosting.json','dist/.openai/hosting.json');
-console.log('Built What-If Lens worker and embedded assets.');
+await writeFile('src/assets.generated.js','export default '+JSON.stringify(assets)+';');
+await build({entryPoints:['src/worker-entry.js'],bundle:true,format:'esm',outfile:'dist/server/index.js',target:'es2022',platform:'browser',minify:true});
+await copyFile('.openai/hosting.json','dist/.openai/hosting.json');console.log('Built scientific compiler, Three.js lab and Worker API.');

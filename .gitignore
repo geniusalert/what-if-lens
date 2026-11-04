@@ -2,3 +2,9 @@ dist/
 .env
 node_modules/
 *.log
+
+src/lab3d.bundle.js
+.env.*
+!.env.example
+
+src/assets.generated.js

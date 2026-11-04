@@ -1,0 +1,27 @@
+{
+  "observedAt": "2026-11-04T17:41:22.135Z",
+  "runtime": "v22.14.0",
+  "description": "Local CPU measurements; excludes network inference, GPU rendering and cold start.",
+  "modules": {
+    "incline": {
+      "solveMedianMs": 0.022299999999994213,
+      "solveP95Ms": 0.16550000000000153,
+      "frameMeanMs": 0.0056526
+    },
+    "surface": {
+      "solveMedianMs": 0.617200000000004,
+      "solveP95Ms": 2.1167000000000016,
+      "frameMeanMs": 0.001286699999999996
+    },
+    "circuit": {
+      "solveMedianMs": 0.007100000000008322,
+      "solveP95Ms": 0.015000000000000568,
+      "frameMeanMs": 0.00040730000000000643
+    },
+    "projectile": {
+      "solveMedianMs": 0.008799999999993702,
+      "solveP95Ms": 0.009600000000006048,
+      "frameMeanMs": 0.0007369999999999948
+    }
+  }
+}

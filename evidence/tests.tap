@@ -1,0 +1,145 @@
+TAP version 13
+# Subtest: Incline force balance, kinetic friction, and energy close independently
+ok 1 - Incline force balance, kinetic friction, and energy close independently
+  ---
+  duration_ms: 4.9345
+  ...
+# Subtest: Static rest threshold and inverse solve use a forward check
+ok 2 - Static rest threshold and inverse solve use a forward check
+  ---
+  duration_ms: 1.3229
+  ...
+# Subtest: Friction and unit constraints prevent invalid physics
+ok 3 - Friction and unit constraints prevent invalid physics
+  ---
+  duration_ms: 0.8832
+  ...
+# Subtest: Ordered series topology supports unequal resistors and conservation checks
+ok 4 - Ordered series topology supports unequal resistors and conservation checks
+  ---
+  duration_ms: 1.6589
+  ...
+# Subtest: Safe surface AST and changed frequency match independent numeric values
+ok 5 - Safe surface AST and changed frequency match independent numeric values
+  ---
+  duration_ms: 5.352
+  ...
+# Subtest: Expression precedence, allowed functions, invalid domains and scripts
+ok 6 - Expression precedence, allowed functions, invalid domains and scripts
+  ---
+  duration_ms: 0.9376
+  ...
+# Subtest: Provenance and user review are required for inferred image quantities
+ok 7 - Provenance and user review are required for inferred image quantities
+  ---
+  duration_ms: 0.5206
+  ...
+# Subtest: Projectile inverse and deterministic seeking reproduce the same physical frame
+ok 8 - Projectile inverse and deterministic seeking reproduce the same physical frame
+  ---
+  duration_ms: 0.7545
+  ...
+# Subtest: Unknown patches and unsupported targets cannot mutate state
+ok 9 - Unknown patches and unsupported targets cannot mutate state
+  ---
+  duration_ms: 0.8661
+  ...
+# Subtest: MATH-01: exact roots, vertex and derivative
+ok 10 - MATH-01: exact roots, vertex and derivative
+  ---
+  duration_ms: 2.746
+  ...
+# Subtest: MATH-02: changing a recomputes roots and derivative
+ok 11 - MATH-02: changing a recomputes roots and derivative
+  ---
+  duration_ms: 0.7876
+  ...
+# Subtest: MATH-03: signed integral differs from geometric area
+ok 12 - MATH-03: signed integral differs from geometric area
+  ---
+  duration_ms: 0.345
+  ...
+# Subtest: Linear and constant functions have no invented vertex
+ok 13 - Linear and constant functions have no invented vertex
+  ---
+  duration_ms: 0.3813
+  ...
+# Subtest: PHY-01/02/03: circuit causal changes
+ok 14 - PHY-01/02/03: circuit causal changes
+  ---
+  duration_ms: 0.7923
+  ...
+# Subtest: PHY-04: independent projectile analytic references
+ok 15 - PHY-04: independent projectile analytic references
+  ---
+  duration_ms: 1.37
+  ...
+# Subtest: SEC-01: expression grammar rejects scripts and unsupported operators
+ok 16 - SEC-01: expression grammar rejects scripts and unsupported operators
+  ---
+  duration_ms: 0.6937
+  ...
+# Subtest: Typed commands reject ambiguity and invalid state
+ok 17 - Typed commands reject ambiguity and invalid state
+  ---
+  duration_ms: 0.468
+  ...
+# Subtest: API: absent key returns honest fallback, solve rejects invalid inputs
+ok 18 - API: absent key returns honest fallback, solve rejects invalid inputs
+  ---
+  duration_ms: 25.6996
+  ...
+# Subtest: Experiment create → retrieve → inverse → retrieve requires the correct owner
+ok 19 - Experiment create → retrieve → inverse → retrieve requires the correct owner
+  ---
+  duration_ms: 28.798
+  ...
+# Subtest: Review gate rejects unconfirmed models before simulation
+ok 20 - Review gate rejects unconfirmed models before simulation
+  ---
+  duration_ms: 1.353
+  ...
+# Subtest: Real extraction contract preserves source values and emits trace using mocked HTTP only
+ok 21 - Real extraction contract preserves source values and emits trace using mocked HTTP only
+  ---
+  duration_ms: 3.1092
+  ...
+# Subtest: Prompt is a validated patch, not a direct world mutation
+ok 22 - Prompt is a validated patch, not a direct world mutation
+  ---
+  duration_ms: 6.5133
+  ...
+# Subtest: classification runs Meta first and returns no keys
+ok 23 - classification runs Meta first and returns no keys
+  ---
+  duration_ms: 25.3516
+  ...
+# Subtest: classification precedes separate source-anchored animation planning
+ok 24 - classification precedes separate source-anchored animation planning
+  ---
+  duration_ms: 1.6525
+  ...
+# Subtest: fallback only when allowed, with source provider disclosed
+ok 25 - fallback only when allowed, with source provider disclosed
+  ---
+  duration_ms: 2.5374
+  ...
+# Subtest: untrusted model output cannot introduce code or out-of-image tracks
+ok 26 - untrusted model output cannot introduce code or out-of-image tracks
+  ---
+  duration_ms: 0.3254
+  ...
+# Subtest: missing credentials, unsupported images, and malformed input fail honestly
+ok 27 - missing credentials, unsupported images, and malformed input fail honestly
+  ---
+  duration_ms: 0.845
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 179.3997
