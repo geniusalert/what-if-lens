@@ -36,3 +36,14 @@ The circuit has one ideal voltage source and one equivalent linear resistive loa
 Other subjects, free-form AI tutoring, SAM segmentation, voice, PDF region capture, generalized symbolic math, and photorealistic 3D are not implemented. The app's capability view discloses this scope. This is a functional MVP, not the universal long-term platform.
 
 The server proxy is intended for the owner-private deployment. Before any public rollout add authentication, rate limiting and usage quotas to the image inference endpoint.
+
+
+## Living textbook update
+
+Upload now calls `/api/classify` first and `/api/animate` second. Meta Muse Spark identifies the image family, then returns a bounded declarative motion plan with normalized coordinates on the original image. No generated JavaScript is executed. Schema and runtime validation limit track count, point count, coordinates, labels and speeds.
+
+The new Canvas motion studio renders animated overlays on the uploaded image and separate illustrative studio templates. The studio includes a perspective circuit with glowing lamp and flowing conventional-current particles, a pendulum and travelling wave, plus basic ray, rotation, trajectory and graph illustrations. Source overlays are AI-estimated geometry, not calibrated tracking or verified arbitrary physics. Illustrated studio templates do not reconstruct arbitrary uploaded apparatus. Non-educational or unsupported images fail explicitly. This is procedural 2.5D animation, not an image-to-3D mesh or generative video service.
+
+Meta is primary: `MODEL_API_KEY`, optional `META_MODEL`. OpenRouter is optional: `OPENROUTER_API_KEY`, optional `OPENROUTER_MODEL` (default `google/gemini-2.5-flash`). Configure `ALLOW_OPENROUTER_FALLBACK=true` only when image transmission to OpenRouter is intended. The app also supports tab-memory keys via Connect AI; these go through the same-origin backend, are never stored in localStorage or exports, and are cleared when the tab reloads. The fallback checkbox explicitly opts into OpenRouter after a Meta error. Provider errors and model-schema failures preserve the current experiment.
+
+Live provider inference requires an actual account key and has not been verified without one. Automated provider tests use mocked HTTP responses, covering Meta precedence, separate classify/plan calls, optional fallback and malformed model output.

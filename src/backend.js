@@ -1,8 +1,10 @@
 import {defaults,validate,solve} from './science.js';
+import {visionRoute} from './vision.js';
 const json=(v,status=200)=>new Response(JSON.stringify(v),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 export default {async fetch(request,env={}){
  const path=new URL(request.url).pathname;
- if(path==='/api/status')return json({vision:!!env.MODEL_API_KEY,model:'muse-spark-1.3'});
+ if(path==='/api/status')return json({vision:!!(env.MODEL_API_KEY||env.OPENROUTER_API_KEY),meta:!!env.MODEL_API_KEY,openrouter:!!env.OPENROUTER_API_KEY,model:env.META_MODEL||'muse-spark-1.3'});
+ if(path==='/api/classify'||path==='/api/animate')return visionRoute(request,env,path);
  if(path==='/api/analyze'){
   if(request.method!=='POST')return json({error:'Use POST'},405);
   if(!env.MODEL_API_KEY)return json({error:'Image interpretation is not connected. Use manual entry below. The server needs a MODEL_API_KEY secret.'},503);
