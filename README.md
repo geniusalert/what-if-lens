@@ -2,6 +2,8 @@
 
 The main **Open Lens** entry combines a continuously live camera and a 3D Scientific Lab in one workspace. Use the top switch: diagrams can animate over the camera, while equations and text-only questions construct a model in the lab. Quadratic equations are supported. The same prompt edits the active experiment.
 
+Recognized diagrams outside the exact numerical solvers now compile into bounded animated scene graphs. Pulley/Atwood machines, connected blocks, ramps and force diagrams become actual 3D geometry with coordinated motion; they no longer stop at an unsupported-model question. These generated reconstructions are explicitly illustrative when physical quantities or an exact solver are unavailable.
+
 See [evidence/UNIFIED_WORKSPACE.md](evidence/UNIFIED_WORKSPACE.md) for the current verification and limits.
 
 From static learning material to executable scientific experiments.

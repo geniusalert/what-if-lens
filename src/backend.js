@@ -4,6 +4,7 @@ import {checkBudget,scientificRoute} from './scientific-api.js';
 import {defaults,validate,solve} from './science.js';
 import {visionRoute} from './vision.js';
 import {lensRoute} from './lens-api.js';
+import {sceneRoute} from './scene-api.js';
 const json=(v,status=200)=>new Response(JSON.stringify(v),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 const cameraReplies=new Map();
 const replyKey=request=>{const id=request.headers.get('X-Camera-Request-Id');return id&&/^[a-f0-9-]{36}$/i.test(id)?id:null;};
@@ -12,16 +13,17 @@ export default {async fetch(request,env={}){
  const path=new URL(request.url).pathname;
  if(path==='/api/lens/edit')return lensRoute(request,env);
  if(path==='/api/status')return json({vision:!!(env.MODEL_API_KEY||env.OPENROUTER_API_KEY),meta:!!env.MODEL_API_KEY,openrouter:!!env.OPENROUTER_API_KEY,model:env.META_MODEL||'muse-spark-1.3'});
- if(path==='/api/classify'||path==='/api/animate'){try{
+ if(path==='/api/classify'||path==='/api/animate'||path==='/api/lens/scene'){try{
+  const execute=req=>path==='/api/lens/scene'?sceneRoute(req,env):visionRoute(req,env,path),budget=()=>{if(path!=='/api/lens/scene')checkBudget(request,env);};
   const id=replyKey(request),now=Date.now();
-  if(!id){checkBudget(request,env);return visionRoute(request,env,path);}
+  if(!id){budget();return execute(request);}
   const raw=await request.text();if(raw.length>7000000)return json({error:'Image too large.'},413);
   const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(raw)),hash=Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join(''),who=request.headers.get('oai-authenticated-user-id')||request.headers.get('CF-Connecting-IP')||'local',key=who+':'+path+':'+id,prior=cameraReplies.get(key);
   if(prior&&now-prior.created<180000){if(prior.hash!==hash)return json({error:'Request ID was already used for different image data.'},409);return cached(await prior.promise);}
   for(const[k,v]of cameraReplies)if(now-v.created>180000)cameraReplies.delete(k);
   if(cameraReplies.size>100)cameraReplies.delete(cameraReplies.keys().next().value);
-  checkBudget(request,env);
-  const promise=visionRoute(new Request(request.url,{method:request.method,headers:request.headers,body:raw}),env,path).then(async response=>({body:await response.text(),status:response.status}));
+  budget();
+  const promise=execute(new Request(request.url,{method:request.method,headers:request.headers,body:raw})).then(async response=>({body:await response.text(),status:response.status}));
   cameraReplies.set(key,{created:now,hash,promise});return cached(await promise);
  }catch(e){return json({error:e.message},429);}}
  if(path==='/api/analyze'||path==='/api/validate'||path==='/api/experiments'||path.startsWith('/api/experiments/'))return scientificRoute(request,env,path);

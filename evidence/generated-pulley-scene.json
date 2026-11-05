@@ -1,0 +1,437 @@
+{
+  "value": {
+    "assumptions": [
+      "Angle of incline estimated about 30 degrees from blurry image.",
+      "Motion is illustrative small oscillation, not measured.",
+      "String assumed light inextensible with equal tension.",
+      "Force arrows show directions only, not magnitudes."
+    ],
+    "description": "Two blocks linked by string over small pulley. Left block on horizontal surface, right block on incline. Weight and normal arrows shown. Blocks slide coupled while pulley rotates.",
+    "equations": [
+      "R1 = m*g",
+      "R2 = M*g*cos(theta)",
+      "T ~ M*g*sin(theta) illustrative"
+    ],
+    "objects": [
+      {
+        "color": "slate",
+        "id": "horiz_surface",
+        "label": "horizontal surface",
+        "motion": {
+          "amplitude": 0,
+          "axis": [
+            0,
+            0,
+            0
+          ],
+          "period": 4,
+          "phase": 0,
+          "type": "none"
+        },
+        "points": [],
+        "position": [
+          0.37,
+          0.536,
+          0
+        ],
+        "primitive": "box",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          0.3,
+          0.012,
+          0.02
+        ]
+      },
+      {
+        "color": "slate",
+        "id": "incline_ramp",
+        "label": "incline",
+        "motion": {
+          "amplitude": 0,
+          "axis": [
+            0,
+            0,
+            0
+          ],
+          "period": 4,
+          "phase": 0,
+          "type": "none"
+        },
+        "points": [],
+        "position": [
+          0.69,
+          0.59,
+          -0.01
+        ],
+        "primitive": "box",
+        "rotation": [
+          0,
+          0,
+          0.5
+        ],
+        "size": [
+          0.32,
+          0.014,
+          0.03
+        ]
+      },
+      {
+        "color": "blue",
+        "id": "block_m",
+        "label": "block m",
+        "motion": {
+          "amplitude": 0.02,
+          "axis": [
+            1,
+            0,
+            0
+          ],
+          "period": 3,
+          "phase": 0,
+          "type": "oscillate"
+        },
+        "points": [],
+        "position": [
+          0.32,
+          0.49,
+          0
+        ],
+        "primitive": "box",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          0.07,
+          0.08,
+          0.05
+        ]
+      },
+      {
+        "color": "amber",
+        "id": "block_M",
+        "label": "block M",
+        "motion": {
+          "amplitude": 0.02,
+          "axis": [
+            0.87,
+            0.5,
+            0
+          ],
+          "period": 3,
+          "phase": 3.1416,
+          "type": "oscillate"
+        },
+        "points": [],
+        "position": [
+          0.7,
+          0.55,
+          0
+        ],
+        "primitive": "box",
+        "rotation": [
+          0,
+          0,
+          0.5
+        ],
+        "size": [
+          0.07,
+          0.08,
+          0.05
+        ]
+      },
+      {
+        "color": "violet",
+        "id": "pulley",
+        "label": "pulley",
+        "motion": {
+          "amplitude": 0.5,
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "period": 3,
+          "phase": 0,
+          "type": "rotate"
+        },
+        "points": [],
+        "position": [
+          0.55,
+          0.52,
+          0
+        ],
+        "primitive": "torus",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          0.04,
+          0.04,
+          0.015
+        ]
+      },
+      {
+        "color": "white",
+        "id": "rope",
+        "label": "string T",
+        "motion": {
+          "amplitude": 0,
+          "axis": [
+            0,
+            0,
+            0
+          ],
+          "period": 4,
+          "phase": 0,
+          "type": "none"
+        },
+        "points": [
+          [
+            0.355,
+            0.5,
+            0
+          ],
+          [
+            0.55,
+            0.51,
+            0
+          ],
+          [
+            0.685,
+            0.54,
+            0
+          ]
+        ],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "primitive": "line",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          0.005,
+          0.005,
+          0.005
+        ]
+      },
+      {
+        "color": "cyan",
+        "id": "weight_m",
+        "label": "mg",
+        "motion": {
+          "amplitude": 0,
+          "axis": [
+            0,
+            0,
+            0
+          ],
+          "period": 4,
+          "phase": 0,
+          "type": "none"
+        },
+        "points": [
+          [
+            0.32,
+            0.5,
+            0
+          ],
+          [
+            0.32,
+            0.6,
+            0
+          ]
+        ],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "primitive": "arrow",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          0.005,
+          0.005,
+          0.005
+        ]
+      },
+      {
+        "color": "cyan",
+        "id": "normal_R1",
+        "label": "R1",
+        "motion": {
+          "amplitude": 0,
+          "axis": [
+            0,
+            0,
+            0
+          ],
+          "period": 4,
+          "phase": 0,
+          "type": "none"
+        },
+        "points": [
+          [
+            0.32,
+            0.48,
+            0
+          ],
+          [
+            0.32,
+            0.4,
+            0
+          ]
+        ],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "primitive": "arrow",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          0.005,
+          0.005,
+          0.005
+        ]
+      },
+      {
+        "color": "cyan",
+        "id": "weight_Mg",
+        "label": "Mg",
+        "motion": {
+          "amplitude": 0,
+          "axis": [
+            0,
+            0,
+            0
+          ],
+          "period": 4,
+          "phase": 0,
+          "type": "none"
+        },
+        "points": [
+          [
+            0.7,
+            0.56,
+            0
+          ],
+          [
+            0.7,
+            0.66,
+            0
+          ]
+        ],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "primitive": "arrow",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          0.005,
+          0.005,
+          0.005
+        ]
+      },
+      {
+        "color": "cyan",
+        "id": "normal_R2",
+        "label": "R2",
+        "motion": {
+          "amplitude": 0,
+          "axis": [
+            0,
+            0,
+            0
+          ],
+          "period": 4,
+          "phase": 0,
+          "type": "none"
+        },
+        "points": [
+          [
+            0.7,
+            0.54,
+            0
+          ],
+          [
+            0.76,
+            0.46,
+            0
+          ]
+        ],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "primitive": "arrow",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "size": [
+          0.005,
+          0.005,
+          0.005
+        ]
+      }
+    ],
+    "title": "Two blocks over pulley - horizontal and incline"
+  },
+  "trace": {
+    "requestId": "c9a7822d-6b73-426d-9d97-1080769f9ff3",
+    "startedAt": "2026-11-05T16:37:02.522Z",
+    "attempts": [
+      {
+        "provider": "Meta",
+        "model": "muse-spark-1.3",
+        "status": 200,
+        "ms": 52433
+      },
+      {
+        "provider": "Meta",
+        "model": "muse-spark-1.3",
+        "status": "response_or_validation_error",
+        "ms": 52437
+      },
+      {
+        "provider": "Meta",
+        "model": "muse-spark-1.3",
+        "status": 200,
+        "ms": 41555
+      }
+    ],
+    "model": "muse-spark-1.3",
+    "provider": "Meta",
+    "ms": 93994,
+    "validated": true
+  }
+}
