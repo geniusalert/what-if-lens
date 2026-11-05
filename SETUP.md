@@ -34,6 +34,10 @@ No live Meta request has been certified in the delivered evidence without your k
 
 ## Camera use
 
+The current **Open Lens** workspace has a **Live Camera / Scientific Lab** switch at the top. Enable the camera, allow permission, and hold a diagram steady. Video keeps running during recognition and animation. Automatic recognition performs up to three scans per session, spaced by at least 30 seconds; **Animate this view** requests a new frame manually. Uploading a photo is also supported. Text-only equations automatically open in the lab, and an equation can be typed into **Build in 3D** with no API call. Review extracted values before using physical what-if edits.
+
+Small camera movements are tracked locally. If alignment is lost, move back to the diagram or re-scan; the camera does not become a frozen snapshot. Scientific Lab constructs quadratics, projectiles, inclines, series circuits and surfaces. General diagrams have conceptual overlays; they are not automatically converted into arbitrary exact physical solvers.
+
 After configuring the hosted Meta key, open the public URL on your phone in Safari or Chrome. Choose Open camera, then Enable camera and allow camera permission. Point at a clear supported diagram and tap it. Use Flip camera if the wrong lens is selected. The captured frame is analyzed and its conceptual motion overlay is shown on the camera view. Small motions are tracked approximately; re-scan when alignment is lost. Closing the camera view turns off the stream.
 
 Automatic scan is optional and sends selected steady frames to the configured model. Leave it off for tap-only capture. For exact calculations rather than an illustrative overlay, choose Open captured frame in scientific lab and review the extracted quantities before execution.

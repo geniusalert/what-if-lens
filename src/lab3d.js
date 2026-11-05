@@ -1,4 +1,6 @@
 import {openCameraLens} from './camera-lens.js';
+import {openLensWorkspace} from './lens-workspace.js';
+const lensStyles=document.createElement('link');lensStyles.rel='stylesheet';lensStyles.href='/lens.css';document.head.append(lensStyles);
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {sampleIR,validateIR,solveIR,frameState,surfaceValue,parseExpression,parameterSpecs,applyScientificPatch,inverseExperiment} from './compiler.js';
@@ -72,7 +74,9 @@ export function openScientificLab(template='incline',given=null,photo='',snapsho
  rebuild();refresh();addTrace({stage:'initialize',source:ir.source.type,provider:'none',method:'local_deterministic',at:new Date().toISOString()});q('.sc-pipeline').dataset.stage='5';metricsFrame();drawChart();raf=requestAnimationFrame(animate);window.scrollTo(0,0);
  liveLab={dispose(){document.removeEventListener('camera-photo',receivePhoto);document.removeEventListener('camera-frame',receiveFrame);if(recorder?.state==='recording')recorder.stop();disposed=true;cancelAnimationFrame(raf);resizeObserver?.disconnect();controls?.dispose();removeWorld(world);removeWorld(ghost);renderer?.dispose();},addTrace,setServerId:id=>serverId=id};return liveLab;
 }
-document.addEventListener('click',e=>{const camera=e.target.closest('[data-camera-open]');if(camera){launchCameraMode();return;}const b=e.target.closest('[data-sc-open]');if(b)openScientificLab(b.dataset.scOpen||'incline');});
+document.addEventListener('click',e=>{const camera=e.target.closest('[data-camera-open]'),lab=e.target.closest('[data-sc-open]'),example=e.target.closest('[data-open]'),equation=e.target.closest('[data-action="equation"]');if(camera||lab||example||equation){e.preventDefault();e.stopImmediatePropagation();openLensWorkspace({mode:camera?'live':'lab',sample:lab?lab.dataset.scOpen:example?(example.dataset.open==='math'?'quadratic':example.dataset.open):null});}},true);
 
-function launchCameraMode(){return openCameraLens({onPhoto:file=>{openScientificLab('incline');document.dispatchEvent(new CustomEvent('camera-photo',{detail:file}));},onLab:data=>{openScientificLab('incline');document.dispatchEvent(new CustomEvent('camera-frame',{detail:data}));}});}
+function launchCameraMode(){return openLensWorkspace();}
+const primaryNav=document.querySelector('header nav');if(primaryNav)primaryNav.innerHTML='<button data-camera-open>◉ Open Lens <span>LIVE + 3D LAB</span></button><span id="save-count" hidden>0</span>';
+const primaryEntry=document.querySelector('.hero-actions [data-camera-open]');if(primaryEntry)primaryEntry.innerHTML='<span>◉</span> Open Lens <span>↗</span>';
 if(location.hash==='#camera')launchCameraMode();

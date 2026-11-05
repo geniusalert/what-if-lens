@@ -1,5 +1,9 @@
 # What-If Lens
 
+The main **Open Lens** entry combines a continuously live camera and a 3D Scientific Lab in one workspace. Use the top switch: diagrams can animate over the camera, while equations and text-only questions construct a model in the lab. Quadratic equations are supported. The same prompt edits the active experiment.
+
+See [evidence/UNIFIED_WORKSPACE.md](evidence/UNIFIED_WORKSPACE.md) for the current verification and limits.
+
 From static learning material to executable scientific experiments.
 
 A Meta-first scientific compiler with a Three.js workbench, deterministic solvers, source review and verified inverse experiments. The earlier math/physics labs and conceptual motion studio remain available.

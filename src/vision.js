@@ -1,6 +1,7 @@
 const families=['circuit','projectile','math','pendulum','wave','optics','rotation','flow','unsupported'];
 const classificationSchema={type:'object',additionalProperties:false,properties:{family:{type:'string',enum:families},title:{type:'string'},description:{type:'string'},confidence:{type:'number'},uncertainty:{type:'string'}},required:['family','title','description','confidence','uncertainty']};
 const pointSchema={type:'object',additionalProperties:false,properties:{x:{type:'number'},y:{type:'number'}},required:['x','y']};
+classificationSchema.properties.hasDiagram={type:'boolean'};classificationSchema.required.push('hasDiagram');
 const planSchema={type:'object',additionalProperties:false,properties:{explanation:{type:'string'},equation:{type:'string'},assumptions:{type:'array',items:{type:'string'}},tracks:{type:'array',items:{type:'object',additionalProperties:false,properties:{kind:{type:'string',enum:['flow','oscillate','rotate','wave','trace']},label:{type:'string'},points:{type:'array',items:pointSchema},speed:{type:'number'}},required:['kind','label','points','speed']}},markers:{type:'array',items:{type:'object',additionalProperties:false,properties:{x:{type:'number'},y:{type:'number'},label:{type:'string'},effect:{type:'string',enum:['glow','pivot','label']}},required:['x','y','label','effect']}}},required:['explanation','equation','assumptions','tracks','markers']};
 export function validateClassification(c){if(!c||!families.includes(c.family)||typeof c.title!=='string'||c.title.length>160||typeof c.description!=='string'||c.description.length>1800||typeof c.confidence!=='number'||c.confidence<0||c.confidence>1||typeof c.uncertainty!=='string')throw Error('Invalid image classification.');return c;}
 export function validateMotionPlan(p){
@@ -15,7 +16,9 @@ function providers(env,body){const list=[];const meta=env.MODEL_API_KEY;const ro
  if(router&&(!meta||body.allowFallback===true||env.ALLOW_OPENROUTER_FALLBACK==='true'))list.push({name:'OpenRouter',key:router,url:'https://openrouter.ai/api/v1/chat/completions',model:env.OPENROUTER_MODEL||'google/gemini-2.5-flash'});
  return list;
 }
-async function infer(env,body,schema,name,instruction){
+export async function infer(env,body,schema,name,instruction){
+ if(name==='ImageClassification')instruction+=' Set hasDiagram true only when a visible diagram, graph, curve or physical apparatus can be localized in the image. A text-only question or equation has hasDiagram false.';
+ if(name==='MotionPlan')instruction+=' For an actual drawn parabola, use a trace track of ordered points following that exact curve; a 3D ball will move on it. For circuits do not imply current across a visibly open switch; use markers only when there is no closed conductive path. Clearly state when switch state or geometry is uncertain. For other mechanics diagrams anchor pivot and moving object positions to the visible drawing. Do not substitute a different generic circuit or curve.';
  const available=providers(env,body),attempts=[];let lastKind='unavailable';
  if(!available.length)throw Error('Connect your Meta API key to classify this image. OpenRouter is available as an optional fallback.');
  const started=Date.now(),requestId=crypto.randomUUID();
