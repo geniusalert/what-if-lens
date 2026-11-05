@@ -2,10 +2,15 @@ import {validateClassification,validateMotionPlan} from './vision.js';
 // Provider retries live on the server. Do not silently repeat chargeable POSTs here.
 export async function cameraRequest(path,body,{signal,fetcher=fetch,timeoutMs=125000}={}){
  const controller=new AbortController(),abort=()=>controller.abort();
+ const requestId=crypto.randomUUID();
  if(signal?.aborted)controller.abort();else signal?.addEventListener('abort',abort,{once:true});
  const timer=setTimeout(()=>controller.abort(),timeoutMs);
  try{
-  const response=await fetcher(path,{method:'POST',signal:controller.signal,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  let response;
+  for(let attempt=0;attempt<2;attempt++){
+   try{response=await fetcher(path,{method:'POST',signal:controller.signal,headers:{'Content-Type':'application/json','X-Camera-Request-Id':requestId},body:JSON.stringify(body)});break;}
+   catch(error){if(controller.signal.aborted||!(error instanceof TypeError)||attempt)throw error;}
+  }
   let data;try{data=await response.json();}catch{throw Error('The server returned an unreadable response. Your captured diagram is safe; retry when the connection is stable.');}
   if(!response.ok){const error=Error((data.error||'The server could not complete this request.')+(data.trace?.requestId?' Reference: '+data.trace.requestId:''));error.status=response.status;throw error;}
   if(path==='/api/classify')validateClassification(data.classification);

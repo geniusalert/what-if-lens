@@ -9,7 +9,7 @@ A Meta-first scientific compiler with a Three.js workbench, deterministic solver
 Requires Node.js 22 or newer.
 
 ```
-npm ci
+npm install
 npm run build
 npm run dev
 ```

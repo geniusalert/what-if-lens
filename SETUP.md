@@ -4,9 +4,9 @@ The public app and local samples work without credentials. Photo extraction and 
 
 ## Local setup on Windows
 
-1. Open a terminal in this project.
+1. Open PowerShell and run `cd "C:\Users\govin\OneDrive\Documents\ChatGPT\what if lens\what-if-lens"`.
 2. Run `powershell -ExecutionPolicy Bypass -File .\setup-local.ps1` and enter the key at the hidden prompt. This writes an ignored `.env` file locally. Do not paste the key into chat or commit the file.
-3. Run `npm ci`, `npm run build`, then `npm run dev`.
+3. Run `npm install`, `npm run build`, then `npm run dev`. Use `npm install`, not `npm ci`; this project does not ship a package-lock file.
 4. Open http://localhost:4173 and enter Scientific Lab. Upload a supported photo. Inspect the parsed values, confirm the assumptions, and run the experiment.
 
 The setup script creates or replaces the local `.env` file. It does not configure hosted secrets.

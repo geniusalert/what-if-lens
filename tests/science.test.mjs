@@ -3,6 +3,12 @@ import assert from 'node:assert/strict';
 import {defaults,solve,parseQuadratic,command,validate} from '../src/science.js';
 import worker from '../src/backend.js';
 const near=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<eps,`${a} ≈ ${b}`);
+test('camera request id replays a completed response without another model call',async t=>{
+ let calls=0;t.mock.method(globalThis,'fetch',async()=>{calls++;return Response.json({choices:[{message:{content:JSON.stringify({family:'circuit',title:'Circuit',description:'Diagram',confidence:.9,uncertainty:''})}}]});});
+ const headers={'Content-Type':'application/json','X-Camera-Request-Id':'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa'},body=JSON.stringify({image:'data:image/png;base64,aGVsbG8='});
+ const a=await worker.fetch(new Request('https://test/api/classify',{method:'POST',headers,body}),{MODEL_API_KEY:'private'}),b=await worker.fetch(new Request('https://test/api/classify',{method:'POST',headers,body}),{MODEL_API_KEY:'private'});
+ assert.equal(a.status,200);assert.equal(b.headers.get('X-Camera-Replay'),'1');assert.equal(calls,1);
+});
 test('MATH-01: exact roots, vertex and derivative',()=>{const r=solve('math',parseQuadratic('y = x² − 4x + 3'));assert.deepEqual(r.roots,[1,3]);assert.deepEqual(r.vertex,{x:2,y:-1});assert.deepEqual(r.derivative,[2,-4]);});
 test('MATH-02: changing a recomputes roots and derivative',()=>{const p=command('math',defaults.math,'double a').params,r=solve('math',p);assert.deepEqual(r.derivative,[4,-4]);assert.deepEqual(r.vertex,{x:1,y:1});assert.deepEqual(r.roots,[]);});
 test('MATH-03: signed integral differs from geometric area',()=>{const r=solve('math',defaults.math);near(r.signed,-4/3);near(r.area,4/3);const p={...defaults.math,lo:0,hi:4};const result=solve('math',p);near(result.signed,4/3);near(result.area,4);});
