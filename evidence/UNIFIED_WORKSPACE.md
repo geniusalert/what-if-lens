@@ -9,6 +9,7 @@ The main entry now opens one workspace with Live Camera and Scientific Lab view 
 - If registration is lost, video continues and the live mesh is hidden until re-aligned or re-scanned. Automatic recognition is bounded to three scans per session, at least 30 seconds apart. Manual capture remains available.
 - The classifier supplies hasDiagram. Text-only equations/questions construct a scientific model in the same workspace. Scientific Lab can also be explicitly selected before capture or upload.
 - Quadratics support image extraction, editable coefficients, roots, discriminant, a 3D curve and continuously moving mathematical marker. The mathematical marker does not claim a physical mass or gravity trajectory.
+- The lab fits edited curves automatically. Display grid spacing is illustrative; exact values come from the equation and metrics.
 - Supported reviewed scientific models can be changed through a Meta typed patch. Projectile angle edits, circuit current/switch changes and ideal incline changes can update the registered live overlay approximately. Unsupported mechanics and arbitrary wiring are reported honestly.
 - Camera permission errors, cancellation, HTTP/JSON failures, retries and review are visible. Request replay caching is instance-local, scoped by client and route, checks a body hash, and shares pending work. It is not a durable distributed job system.
 
