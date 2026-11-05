@@ -15,6 +15,12 @@ The setup script creates or replaces the local `.env` file. It does not configur
 
 The Site owner must configure `MODEL_API_KEY` as a protected runtime secret using Sites environment-variable management, then deploy a saved version to apply the environment revision. The key must never be added to `.openai/hosting.json`, client code, source control, or a public issue.
 
+## Vercel deployment
+
+Use the existing `what-if-lens` project in the `geniusalerts-projects` team. `vercel.json` serves the built frontend from `dist/public` and routes API requests to `api/index.mjs` on Node.js. Keep the framework preset **Other**, Node.js **22.x**, and build command `node build.mjs --vercel`; the local `server.mjs` is not a production entry point. The API has a 300-second duration budget for Meta generation and its bounded retry.
+
+Set `MODEL_API_KEY` as a **Secret** for Production in Vercel's Environment Variables settings; optional `META_MODEL=muse-spark-1.3` is non-sensitive configuration. Redeploy after changing server variables. `.env` stays local and is excluded from upload. Production address: https://what-if-lens.vercel.app/#camera. Check `/api/status` for `meta: true` (this endpoint never returns the key), then upload a diagram and verify animation.
+
 If using Codex to configure the hosted secret: first run the local hidden-prompt setup above, then ask Codex to transfer the key from the ignored `.env` to the existing Site's protected runtime secret. Codex should pass the value directly to the native Sites environment-variable tool without displaying it, then redeploy the current saved version. The public Site ID is in `.openai/hosting.json`; keep that identity unchanged.
 
 Set optional `META_MODEL=muse-spark-1.3`. Leave `OPENROUTER_API_KEY` unset for a Meta-only demo. If intentionally enabling fallback, configure that key as a runtime secret and set `ALLOW_OPENROUTER_FALLBACK=true`; the UI trace names OpenRouter whenever it is used. Fallback is not evidence of Meta usage.

@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+.openai/
+.git/
+dist/
+node_modules/
+evidence/
+tests/
+fixtures/
+*.log

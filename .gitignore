@@ -8,3 +8,5 @@ src/lab3d.bundle.js
 !.env.example
 
 src/assets.generated.js
+.vercel/
+.vercel
