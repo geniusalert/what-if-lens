@@ -1,4 +1,5 @@
 // A bounded scene description, never executable model-generated code.
+import {validateAnnotations} from './science-paths.js';
 const vec={type:'array',items:{type:'number'}};
 const motionSchema={type:'object',additionalProperties:false,properties:{type:{type:'string',enum:['none','oscillate','rotate','pulse','path','flow']},axis:vec,amplitude:{type:'number'},period:{type:'number'},phase:{type:'number'}},required:['type','axis','amplitude','period','phase']};
 const objectSchema={type:'object',additionalProperties:false,properties:{id:{type:'string'},label:{type:'string'},primitive:{type:'string',enum:['box','sphere','cylinder','torus','cone','line','arrow','text']},position:vec,size:vec,rotation:vec,color:{type:'string',enum:['cyan','amber','white','blue','violet','slate']},points:{type:'array',items:vec},motion:motionSchema},required:['id','label','primitive','position','size','rotation','color','points','motion']};
@@ -13,6 +14,7 @@ export function validateSceneGraph(input){
   const m=n.motion;if(!m||!['none','oscillate','rotate','pulse','path','flow'].includes(m.type)||!vector(m.axis,-1,1)||!Number.isFinite(m.amplitude)||m.amplitude<0||m.amplitude>.5||!Number.isFinite(m.period)||m.period<.5||m.period>30||!Number.isFinite(m.phase)||Math.abs(m.phase)>6.3)throw Error('Invalid generated motion.');
   if(['line','arrow'].includes(n.primitive)&&n.points.length<2)throw Error('A line or arrow needs endpoints.');if((m.type==='path'||m.type==='flow')&&n.points.length<2)throw Error('Path motion needs a visible path.');if(n.primitive!=='text'&&((m.type==='rotate'&&m.axis.some(v=>v!==0))||m.type==='path'||(m.type==='flow'&&n.primitive==='line')||(m.type==='oscillate'&&m.amplitude>0&&m.axis.some(v=>v!==0))||(m.type==='pulse'&&m.amplitude>0)))moving++;
  }
+ if(input.annotations!==undefined)input.annotations=validateAnnotations(input.annotations);
  if(!moving||!input.objects.some(n=>!['text','line','arrow'].includes(n.primitive)))throw Error('The generated scene needs actual animated 3D objects.');return structuredClone(input);
 }
 export function sceneObjectState(node,time){

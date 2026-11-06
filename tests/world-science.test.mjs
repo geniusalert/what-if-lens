@@ -51,9 +51,9 @@ test('one observation produces both real-object geometry and science context thr
  let calls=0;t.mock.method(globalThis,'fetch',async(url,options)=>{calls++;const body=JSON.parse(options.body);assert.match(body.messages[1].content[0].text,/Explain this bridge/);assert.ok(body.response_format.json_schema.schema.properties.science);return Response.json({choices:[{message:{content:JSON.stringify(worldExample('bridge'))}}]});});
  const r=await sceneRoute(new Request('https://test/api/lens/scene',{method:'POST',body:JSON.stringify({image:'data:image/jpeg;base64,aGVsbG8=',question:'Explain this bridge'})}),{MODEL_API_KEY:'test'});const data=await r.json();assert.equal(r.status,200);assert.equal(calls,1);assert.equal(data.value.science.kind,'bridge');assert.equal(data.trace.provider,'Meta');
 });
-test('live real-world overlays keep the object translucent and force annotations legible',()=>{
+test('live photo overlays retain the source without ghost reconstructions',()=>{
  const renderer=Object.create(LensScene.prototype);renderer.group=new THREE.Group();renderer.overlay=true;renderer.setScene(worldExample('vehicle'));renderer.present(renderer.direction.frame(5));
- const car=renderer.generated.find(i=>i.node.id==='car');let opacity;car.object.traverse(o=>{if(o.isMesh)opacity=o.material.opacity;});assert.ok(opacity>0&&opacity<.3);
+ const car=renderer.generated.find(i=>i.node.id==='car');assert.equal(car.holder.visible,false);assert.ok(renderer.forcePaths.items.length>=3);assert.ok(renderer.forcePaths.items.every(i=>i.group.visible));
  const science=parseWorldQuestion('car at 0 km/h Cd 0.3 area 2.2 m2 density 1.225').science;renderer.setScienceResult(science,solveWorldScience(science));renderer.present(renderer.direction.frame(5));
  assert.equal(renderer.generated.find(i=>i.node.id==='drag').holder.visible,false);assert.equal(renderer.generated.find(i=>i.node.id==='air1').particles.visible,false);
  renderer.setScienceResult(prepareWorldScience(worldExample('vehicle').science),{ready:false});assert.equal(renderer.generated.find(i=>i.node.id==='drag').forceZero,false);assert.equal(renderer.generated.find(i=>i.node.id==='air1').particles.visible,true);
