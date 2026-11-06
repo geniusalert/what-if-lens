@@ -10,6 +10,6 @@ A browser upload of the same real photo produced animated air paths and opposing
 
 The browser also answered the static-friction angle question: μs=0.4 gives θcritical=21.8014°, and sliding begins just above it. The exact onset angle is independent of mass in this model. Missing μk does not fabricate a kinetic acceleration. Bridge support reactions use an explicitly labelled two-support point-load beam idealization; curved-arch thrust and internal stresses are not solved from a photo.
 
-70 tests pass, including unit conversion, independent numerical checks, unknown-input gates, geometry generation, translucent live overlays, question-to-context API handling, and existing reset/cancellation behavior. Physical phone capture, calibrated AR, arbitrary structural analysis, CFD and device-specific frame-rate certification are outside the verified claims.
+71 tests pass, including unit conversion, independent numerical checks, unknown-input gates, geometry generation, translucent live overlays, question-to-context API handling, and existing reset/cancellation behavior. Physical phone capture, calibrated AR, arbitrary structural analysis, CFD and device-specific frame-rate certification are outside the verified claims.
 
 Equations: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/drag-equation/ and https://openstax.org/books/university-physics-volume-1/pages/6-2-friction

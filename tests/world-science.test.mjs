@@ -1,8 +1,16 @@
 import test from 'node:test';import assert from 'node:assert/strict';import * as THREE from 'three';
-import {parseWorldQuestion,prepareWorldScience,solveWorldScience,validateWorldScience} from '../src/world-science.js';
+import {parseWorldQuestion,prepareWorldScience,solveWorldScience,validateWorldScience,needsFreshObservation} from '../src/world-science.js';
 import {worldExample} from '../src/world-examples.js';import {worldPanelMarkup} from '../src/world-panel.js';
 import {validateSceneGraph} from '../src/scene-graph.js';import {LensScene} from '../src/lens-scene.js';import {sceneRoute} from '../src/scene-api.js';
 const solve=text=>solveWorldScience(parseWorldQuestion(text).science);
+test('aligned numerical what-ifs reuse their scene while changed or explanatory views are observed again',()=>{
+ const current={live:true,hasScene:true,aligned:true,kind:'vehicle'};
+ assert.equal(needsFreshObservation('What if this car goes at 500 km/h?',current),false);
+ assert.equal(needsFreshObservation('What if this car goes at 500 km/h?',{...current,aligned:false}),true);
+ assert.equal(needsFreshObservation('Explain the science of this car',current),true);
+ assert.equal(needsFreshObservation('Explain this bridge',{...current,live:false}),false);
+ assert.equal(needsFreshObservation('What if this bridge carries a load?',current),true);
+});
 test('500 km/h drag is computed in SI, scales quadratically and separates rolling resistance',()=>{
  const a=solve('Car at 500 km/h, Cd 0.3, frontal area 2.2 m2, air density 1.225, mass 1000 kg, Crr 0.015');
  assert.equal(a.ready,true);assert.ok(Math.abs(a.metrics.drag-7798.032407407408)<1e-7);
