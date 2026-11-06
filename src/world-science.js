@@ -57,11 +57,13 @@ export function parseWorldQuestion(text,current){
  if(recognized&&s.explanation==='Illustrative reconstruction of the visible object.')s.explanation=({drag:'Aerodynamic drag depends on air-relative speed, density, Cd and frontal area. Enter the supplied values to calculate.',incline:'An initially resting object begins sliding when the slope exceeds its static-friction threshold.',bridge_load:'Calculate two vertical support reactions under a specified point load using a simple beam idealization.'})[s.calculator]||s.explanation;return {recognized,science:prepareWorldScience(s)};
 }
 export const worldMetricLabels={drag:['Aerodynamic drag','N'],dragPower:['Power against drag','W'],rollingResistance:['Rolling resistance','N'],totalResistance:['Combined resistance','N'],criticalAngle:['Critical slide angle','°'],slides:['Slides at this angle',''],normal:['Normal force','N'],downSlope:['Down-slope weight','N'],acceleration:['Sliding acceleration','m/s²'],leftReaction:['Left reaction','N'],rightReaction:['Right reaction','N']};
-export function needsFreshObservation(text,{live,hasScene,aligned,kind}){
- if(!live)return false;
+export function needsFreshObservation(text,{live,hasImage=false,hasScene,aligned,kind}){
+ if(!live&&!hasImage)return false;
+ const target=/\bcar\b|\bvehicle\b|\bdrag\b/i.test(text)?'vehicle':/\bbridge\b/i.test(text)?'bridge':/\bobject\b|slid|\btable\b/i.test(text)?'surface':null;
+ if(hasImage&&target&&target!==kind&&kind!=='diagram')return true;
  if(/explain|science of|what (?:is|am)/i.test(text))return true;
  if(!/this (?:car|bridge|object)/i.test(text))return false;
- if(!hasScene||!aligned)return true;
+ if(!hasScene||live&&!aligned)return true;
  if(/this car/i.test(text)&&kind!=='vehicle')return true;
  if(/this bridge/i.test(text)&&kind!=='bridge')return true;
  if(/this object/i.test(text)&&kind!=='surface')return true;

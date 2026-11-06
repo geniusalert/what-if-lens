@@ -10,6 +10,8 @@ test('aligned numerical what-ifs reuse their scene while changed or explanatory 
  assert.equal(needsFreshObservation('Explain the science of this car',current),true);
  assert.equal(needsFreshObservation('Explain this bridge',{...current,live:false}),false);
  assert.equal(needsFreshObservation('What if this bridge carries a load?',current),true);
+ assert.equal(needsFreshObservation('Car at 500 km/h',{...current,live:false,hasImage:true,kind:'bridge'}),true);
+ assert.equal(needsFreshObservation('Car at 500 km/h',{...current,live:false,hasImage:true}),false);
 });
 test('500 km/h drag is computed in SI, scales quadratically and separates rolling resistance',()=>{
  const a=solve('Car at 500 km/h, Cd 0.3, frontal area 2.2 m2, air density 1.225, mass 1000 kg, Crr 0.015');
