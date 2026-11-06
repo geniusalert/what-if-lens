@@ -1,6 +1,6 @@
 // Presentation is deterministic and independent of the physics solver.
 export const smoothstep=x=>{x=Math.max(0,Math.min(1,x));return x*x*(3-2*x);};
-export function actorKind(node){const name=(node.id+' '+node.label).toLowerCase();if(node.primitive==='torus')return 'pulley';if(['line','arrow','text'].includes(node.primitive))return node.primitive;if(/lamp|bulb/.test(name))return 'lamp';if(/battery|cell|voltage.source/.test(name))return 'battery';if(/resistor|resistance/.test(name))return 'resistor';return node.primitive;}
+export function actorKind(node){const name=(node.id+' '+node.label).toLowerCase();if(node.primitive==='torus')return 'pulley';if(['line','arrow','text'].includes(node.primitive))return node.primitive;if(/car body|vehicle|automobile/.test(name))return 'car';if(/arch bridge|bridge span/.test(name))return 'bridge';if(/lamp|bulb/.test(name))return 'lamp';if(/battery|cell|voltage.source/.test(name))return 'battery';if(/resistor|resistance/.test(name))return 'resistor';return node.primitive;}
 export function createDirection(graph){
  const moving=graph.objects.filter(n=>n.motion.type!=='none'&&!['arrow','text'].includes(n.primitive));
  const period=Math.max(2,...moving.map(n=>n.motion.period)),duration=2.4+Math.min(20,period*2)+2;

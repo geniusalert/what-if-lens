@@ -40,7 +40,7 @@ No live Meta request has been certified in the delivered evidence without your k
 
 ## Camera use
 
-The current **Open Lens** workspace has a **Live Camera / Scientific Lab** switch at the top. Enable the camera, allow permission, and hold a diagram steady. Video keeps running during recognition and animation. Automatic recognition performs up to three scans per session, spaced by at least 30 seconds; **Animate this view** requests a new frame manually. Uploading a photo is also supported. Text-only equations automatically open in the lab, and an equation can be typed into **Build in 3D** with no API call. Review extracted values before using physical what-if edits.
+The current **Open Lens** workspace has a **Live Camera / Scientific Lab** switch at the top. Enable the camera, allow permission, and hold a diagram steady. Video keeps running during recognition and animation. Automatic recognition performs up to three scans per session, spaced by at least 30 seconds; **Animate this view** requests a new frame manually. Uploading a photo is also supported. Text-only equations automatically open in the lab, and equations or real-object questions can be typed into the same **Ask Lens** bar. The standalone quadratic panel has been removed. Review extracted values before using physical what-if edits.
 
 Small camera movements are tracked locally. If alignment is lost, move back to the diagram or re-scan; the camera does not become a frozen snapshot. Scientific Lab constructs quadratics, projectiles, inclines, series circuits and surfaces. General diagrams have conceptual overlays; they are not automatically converted into arbitrary exact physical solvers.
 
@@ -53,3 +53,8 @@ Automatic scan is optional and sends selected steady frames to the configured mo
 Open the public camera URL directly in Chrome, Edge, or Safari. Allow Camera in the controls beside the address bar. On Windows, Settings → Privacy & security → Camera must also allow desktop apps. An embedded browser may deny camera access even when the server API works. Use **Use a photo instead** to animate in the same camera studio without a camera permission.
 
 After a scan, animation stays on the actual captured image. **Try live camera** enables approximate tracking; if it loses alignment, the original captured image automatically returns. Provider errors now show a request reference; successful request details can be expanded below the explanation.
+
+
+## Real-world camera questions
+
+The camera accepts real-world photos as well as diagrams. One Meta observation constructs geometry, a scientific explanation and typed context. Ask about a bridge load path, car air resistance or a resting object and friction. Quantitative fields are explicit: car drag needs air-relative speed, Cd, frontal area and density; the onset of sliding needs static friction. Entering or changing supplied quantities recalculates locally, with no model call. Rolling resistance is separate from drag. Curved bridge force paths are conceptual; the optional reaction calculator is a two-support beam idealization. Browser voice entry is available where native speech recognition is supported and requires microphone permission.
