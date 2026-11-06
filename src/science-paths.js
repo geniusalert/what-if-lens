@@ -1,9 +1,10 @@
 // Image registration and explanatory timing are separate from the reconstructed model.
 // All paths are data, never model-generated shaders or executable code.
-export const annotationSchema={type:'object',additionalProperties:false,properties:{target:{type:'string'},paths:{type:'array',items:{type:'object',additionalProperties:false,properties:{id:{type:'string'},label:{type:'string'},role:{type:'string',enum:['load','transfer','reaction','flow','motion','contour']},points:{type:'array',items:{type:'array',items:{type:'number'}}}},required:['id','label','role','points']}}},required:['target','paths']};
+export const annotationSchema={type:'object',additionalProperties:false,properties:{target:{type:'string'},occluders:{type:'array',items:{type:'array',items:{type:'array',items:{type:'number'}}}},paths:{type:'array',items:{type:'object',additionalProperties:false,properties:{id:{type:'string'},label:{type:'string'},role:{type:'string',enum:['load','transfer','reaction','flow','motion','contour']},points:{type:'array',items:{type:'array',items:{type:'number'}}}},required:['id','label','role','points']}}},required:['target','paths','occluders']};
 const roles=annotationSchema.properties.paths.items.properties.role.enum;
 export function validateAnnotations(value){
  if(!value||typeof value.target!=='string'||value.target.length>100||!Array.isArray(value.paths)||value.paths.length>10)throw Error('Invalid source annotations.');
+ if(value.occluders!==undefined){if(!Array.isArray(value.occluders)||value.occluders.length>3)throw Error('Invalid foreground masks.');for(const poly of value.occluders){if(!Array.isArray(poly)||poly.length<3||poly.length>16||poly.some(p=>!Array.isArray(p)||p.length!==2||p.some(n=>!Number.isFinite(n)||n<0||n>1)))throw Error('Invalid foreground polygon.');const area=Math.abs(poly.reduce((a,p,i)=>{const q=poly[(i+1)%poly.length];return a+p[0]*q[1]-q[0]*p[1];},0))/2;if(area<.001||area>.65)throw Error('Foreground mask covers an invalid area.');}}
  const ids=new Set();for(const p of value.paths){if(!p||typeof p.id!=='string'||!/^[-\w]{1,40}$/.test(p.id)||ids.has(p.id)||typeof p.label!=='string'||p.label.length>64||!roles.includes(p.role)||!Array.isArray(p.points)||p.points.length<2||p.points.length>16||p.points.some(v=>!Array.isArray(v)||v.length!==2||v.some(n=>!Number.isFinite(n)||n<0||n>1)))throw Error('Invalid image-anchored path.');ids.add(p.id);if(p.points.every(v=>Math.hypot(v[0]-p.points[0][0],v[1]-p.points[0][1])<.002))throw Error('An annotation needs a visible path.');}
  return structuredClone(value);
 }
@@ -40,3 +41,5 @@ export function placePathLabels(anchors,width,height){
   if(best&&a.x>=0&&a.x<=width&&a.y>=0&&a.y<=height)placed.push(best);
  }return placed;
 }
+
+export function insidePolygon(point,polygon){let inside=false;for(let i=0,j=polygon.length-1;i<polygon.length;j=i++){const a=polygon[i],b=polygon[j];if((a[1]>point[1])!==(b[1]>point[1])&&point[0]<(b[0]-a[0])*(point[1]-a[1])/(b[1]-a[1])+a[0])inside=!inside;}return inside;}

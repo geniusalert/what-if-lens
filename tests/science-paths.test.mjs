@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
-import {validateAnnotations,sciencePaths,forceStory,placePathLabels} from '../src/science-paths.js';
+import {validateAnnotations,sciencePaths,forceStory,placePathLabels,insidePolygon} from '../src/science-paths.js';
 import {ForcePathLayer} from '../src/force-path-layer.js';
 import {worldExample} from '../src/world-examples.js';
 import {createDirection} from '../src/animation-direction.js';
@@ -36,4 +36,12 @@ test('real-object explanations build once and keep moving across story cycles',(
  const graph=worldExample('bridge'),d=createDirection(graph),later=d.frame(d.duration+1);
  assert.equal(d.reveal(graph.objects[0],0,later.time),1);assert.ok(later.motionTime>d.frame(d.duration-1).motionTime);
  assert.deepEqual(d.frame(22),d.frame(22),'seeking always reproduces the same state');
+});
+test('foreground masks hide paths behind occluders without covering the source photograph',()=>{
+ const polygon=[[.2,.6],[.45,.5],[.75,.6],[.8,.8],[.2,.8]],scene=worldExample('bridge');scene.annotations={...annotations,occluders:[polygon]};validateAnnotations(scene.annotations);
+ const layer=new ForcePathLayer(new THREE.Group(),scene,{overlay:true,point:p=>new THREE.Vector3(p[0]*1000,(1-p[1])*1000,p[2]*600+20)});
+ const mask=layer.group.children.find(o=>o.isMesh);assert.equal(mask.material.colorWrite,false);assert.equal(mask.material.depthWrite,true);assert.ok(mask.position.z>layer.items[0].curve.getPointAt(0).z);assert.equal(layer.items[0].base.material.depthTest,true);
+ assert.equal(insidePolygon([.5,.7],polygon),true);assert.equal(insidePolygon([.5,.3],polygon),false);
+ const lab=new ForcePathLayer(new THREE.Group(),scene,{overlay:false,point:p=>new THREE.Vector3(...p)});assert.equal(lab.occluders.length,0,'photo masks never cut holes in the lab model');
+ assert.throws(()=>validateAnnotations({...annotations,occluders:[[[0,0],[1,0],[1,1],[0,1]]]}));
 });
