@@ -7,8 +7,9 @@ const server=createServer(async(req,res)=>{try{
  const url=new URL(req.url,'http://localhost');
  if(!url.pathname.startsWith('/api/')){
   const f={'/':'index.html','/style.css':'style.css','/lens.css':'lens.css','/app.js':'app.js','/science.js':'science.js','/studio.js':'studio.js','/xr-runtime.bundle.js':'xr-runtime.bundle.js','/xr-emulator.bundle.js':'xr-emulator.bundle.js','/lab3d.bundle.js':'lab3d.bundle.js'}[url.pathname];
-  if(!f){res.writeHead(404);return res.end('Not found');}
-  res.setHeader('Cache-Control','no-store');res.setHeader('Content-Type',f.endsWith('.html')?'text/html':f.endsWith('.css')?'text/css':'text/javascript');return res.end(await readFile('src/'+f));
+  const shared=/^\/lens-shared-[A-Z0-9]+\.js$/.test(url.pathname)?url.pathname.slice(1):null;
+  if(!f&&!shared){res.writeHead(404);return res.end('Not found');}
+  res.setHeader('Cache-Control','no-store');res.setHeader('Content-Type',(f||shared).endsWith('.html')?'text/html':(f||shared).endsWith('.css')?'text/css':'text/javascript');return res.end(await readFile('src/'+(f||shared)));
  }
  const chunks=[];for await(const c of req){chunks.push(c);if(chunks.reduce((s,b)=>s+b.length,0)>8e6)throw Error('File too large');}
  const r=await worker.fetch(new Request(url,{method:req.method,headers:req.headers,...(req.method==='POST'?{body:Buffer.concat(chunks)}:{})}),process.env);

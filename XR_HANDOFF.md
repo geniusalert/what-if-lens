@@ -90,3 +90,16 @@ SDK physics/Havok and locomotion are deliberately disabled in this seated versio
 90 tests pass; frontend build succeeds. This is implementation evidence, not a claim that headset acceptance checks have passed.
 
 Live Meta text-to-scene check: generated a four-object pendulum scene in 39.3 seconds with a validated successful response. Generation is provider-dependent, not instant. Verified target commands now include double the range, make it stop sliding (a new-release static-friction solution), and halve the current, with target/actual/error feedback.
+
+
+## Fifth increment: playback, voice and portable experiments
+
+- XR playback now provides 0.25×, 0.5×, 1× and 2× speeds, seek and 1/60-second frame stepping; stepping/seek pause the experiment. Spatial controls and desktop controls both affect the same timeline.
+- Scientific models AND generated illustrative scenes can be saved/resumed locally, exported as bounded JSON, and imported after validation. Unconfirmed scientific models cannot be exported as confirmed experiments. Credentials and source images are not part of the snapshot envelope.
+- Manual quadratic equations compile locally into an exact model without Meta latency. Spatial keyboard supports the needed symbols and has a close control.
+- Optional browser SpeechRecognition sends one recognized command through the existing prompt path, with text fallback and stale-command cancellation. It is not Meta Voice transcription and headset microphone behavior is not verified.
+- Cancel-processing controls retain the current model. Reduced-motion users start with playback paused.
+- Desktop framing, readable spatial labels and a collapsible console replace the distant preview and inherited header layout. Background page is inert while the XR dialog is open.
+- Multi-entry shared-module builds remove independently bundled Three copies; SDK and emulator remain lazy entries. Local server and deployment asset lists serve emitted shared chunks.
+- Browser verification: constructed `y = x^2 - 4x + 3`, selected 0.5× speed, stepped a frame, saved, changed the equation and resumed the saved experiment paused at the saved speed/time. No browser errors or warnings were reported. Export reached its success status, but the browser download event timed out, so file delivery/import and immersive acceptance remain unverified. Fixed unnecessary repeated DOM writes for paused transport state and restored background interaction after failed initialization. Screenshot: `reference/xr-playback-notebook.png`.
+- 95 automated tests pass, including snapshot validation, playback behavior, generated-scene persistence and manual equations. Physical headset interaction, voice capture, full hands-only emulator walkthrough and demo recording remain acceptance gates.

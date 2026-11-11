@@ -1,0 +1,2 @@
+import {parseQuadratic} from './science.js';import {sampleIR,validateIR} from './compiler.js';
+export function manualXREquation(text){if(typeof text!=='string'||text.length>160)throw Error('Use an equation under 160 characters.');if(!/^(y\s*=|f\(x\)\s*=)|x(?:²|\^2|\*\*2)/i.test(text.trim()))return null;const values=parseQuadratic(text.trim().replace(/=\s*0\s*$/,'')),ir=sampleIR('quadratic');ir.source={type:'manual',text:text.trim()};for(const key of ['a','b','c'])ir.parameters[key]={value:values[key],unit:'1',origin:'confirmed'};return validateIR(ir,{review:true});}

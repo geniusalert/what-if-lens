@@ -1,9 +1,8 @@
 import {readFile,mkdir,copyFile,writeFile} from 'node:fs/promises';
 import {build} from 'esbuild';
-await build({entryPoints:['src/lab3d.js'],bundle:true,format:'esm',minify:true,outfile:'src/lab3d.bundle.js',target:'es2022',legalComments:'eof'});
-await build({entryPoints:['src/xr-emulator.js'],bundle:true,format:'esm',minify:true,outfile:'src/xr-emulator.bundle.js',target:'es2022'});
-await build({entryPoints:['src/xr-runtime.js'],bundle:true,format:'esm',minify:true,outfile:'src/xr-runtime.bundle.js',target:'es2022',loader:{'.wasm':'binary'}});
-const files=['xr-runtime.bundle.js','xr-emulator.bundle.js','index.html','style.css','lens.css','app.js','science.js','studio.js','lab3d.bundle.js'];
+const bundled=await build({entryPoints:{'lab3d.bundle':'src/lab3d.js','xr-runtime.bundle':'src/xr-runtime.js','xr-emulator.bundle':'src/xr-emulator.js'},bundle:true,splitting:true,format:'esm',minify:true,outdir:'src',chunkNames:'lens-shared-[hash]',target:'es2022',metafile:true,loader:{'.wasm':'binary'},legalComments:'eof'});
+const generatedFiles=Object.keys(bundled.metafile.outputs).map(path=>path.split(/[\\/]/).at(-1));
+const files=[...generatedFiles,'index.html','style.css','lens.css','app.js','science.js','studio.js'];
 const assets=Object.fromEntries(await Promise.all(files.map(async f=>['/'+(f==='index.html'?'':f),await readFile('src/'+f,'utf8')])));
 await mkdir('dist/public',{recursive:true});
 await Promise.all(files.map(f=>copyFile('src/'+f,'dist/public/'+f)));
