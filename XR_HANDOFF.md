@@ -56,3 +56,14 @@ Open http://localhost:4173/#xr or the emulator query route above. Production req
 - Entry link now opens XR from the existing homepage; repeated entry replaces the old session.
 - 82 tests pass and production bundles compile. Browser verification was attempted but blocked by Work settings (local browser use disabled). Actual IWER/hardware hands-only acceptance and IWSDK migration remain pending, not claimed complete.
 - Entrant supplied a Start application submission confirmation. Approval remains pending.
+
+
+## Third increment: learning loop and notebook
+
+- Four scientifically scored challenges with controlled-variable checks. Challenges and authored experiments run without AI.
+- Before/after numerical comparison with physical units, including restored baseline after undo.
+- Validated local notebook retaining twelve experiments and completed-chapter badges. Storage failure is reported. Resume reconstructs the saved model, not merely its title.
+- Desktop-accessible actions mirror spatial challenge/check/compare/save/resume controls.
+- Negative-number keyboard key for quadratic edits.
+- XR session visibility pauses animation and releases grabs. Exit ends the immersive session before destroying its renderer.
+- Build and 86 tests pass. Browser/immersive verification is still pending because browser automation was disabled in Work settings at the last attempt. IWSDK integration and hardware performance remain outstanding.
