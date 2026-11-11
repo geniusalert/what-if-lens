@@ -103,3 +103,14 @@ Live Meta text-to-scene check: generated a four-object pendulum scene in 39.3 se
 - Multi-entry shared-module builds remove independently bundled Three copies; SDK and emulator remain lazy entries. Local server and deployment asset lists serve emitted shared chunks.
 - Browser verification: constructed `y = x^2 - 4x + 3`, selected 0.5× speed, stepped a frame, saved, changed the equation and resumed the saved experiment paused at the saved speed/time. No browser errors or warnings were reported. Export reached its success status, but the browser download event timed out, so file delivery/import and immersive acceptance remain unverified. Fixed unnecessary repeated DOM writes for paused transport state and restored background interaction after failed initialization. Screenshot: `reference/xr-playback-notebook.png`.
 - 95 automated tests pass, including snapshot validation, playback behavior, generated-scene persistence and manual equations. Physical headset interaction, voice capture, full hands-only emulator walkthrough and demo recording remain acceptance gates.
+
+
+## Sixth increment: camera-first spatial workflow
+
+The XR workspace now starts without an unexplained experiment. Camera start/flip/stop, explicit frame extraction and source uploads share the image-to-model path. The previous model is cleared at extraction start. A live video background can show desktop camera surroundings; generated objects are manually placed, not calibrated against physical geometry. Captures are bounded to 1000px and no audio/continuous video is sent to the model. Late camera permission results release tracks after stop/close. Extraction has cancellation and a 120-second client limit.
+
+IWSDK now initializes an alpha-capable renderer and offers separately detected immersive-vr and immersive-ar entry. Passthrough sessions clear transparently and hide the virtual floor/walls. A simple virtual lab supplies VR/desktop context. Quest passthrough pixels are not assumed available to AI; prepare/upload a source when getUserMedia is unavailable. Calibrated registration, depth occlusion, native headset camera integration and automatic room extraction are NOT complete.
+
+Visible startup feedback replaces a blank asynchronous entry. Provider failures distinguish authentication, quota, timeout and invalid geometry. Camera lifecycle and credential-error tests bring the suite to 99 passing tests. Build passes. Browser entry/capture upload/status handling inspected without console warnings. First illustrative UI extraction failed; a follow-up real Meta API call on projectile-24.png succeeded with 4 validated objects after one repair (73.2 seconds). Physical camera capture and actual immersive sessions remain unverified; this is not complete headset acceptance.
+
+Context and plan: XR_CAMERA_CONTEXT.md. Production remains what-if-lens.vercel.app; the historical chatgpt.site address is not this deployment.
