@@ -114,3 +114,12 @@ IWSDK now initializes an alpha-capable renderer and offers separately detected i
 Visible startup feedback replaces a blank asynchronous entry. Provider failures distinguish authentication, quota, timeout and invalid geometry. Camera lifecycle and credential-error tests bring the suite to 99 passing tests. Build passes. Browser entry/capture upload/status handling inspected without console warnings. First illustrative UI extraction failed; a follow-up real Meta API call on projectile-24.png succeeded with 4 validated objects after one repair (73.2 seconds). Physical camera capture and actual immersive sessions remain unverified; this is not complete headset acceptance.
 
 Context and plan: XR_CAMERA_CONTEXT.md. Production remains what-if-lens.vercel.app; the historical chatgpt.site address is not this deployment.
+
+
+## Seventh increment: compact, image-led interface
+
+Removed the sample textbook, default chapters, preset variable wall and duplicated source-image plane from the camera workspace. Nothing is created on entry. Camera/upload/capture sit in one bottom bar; playback, source thumbnail, saved experiments, interpretation and headset entry move into a dismissible Controls drawer. Desktop camera view contains no spatial UI panels or artificial room. Immersive mode retains a single Controls button that expands a small tray on demand. Model grab interaction remains available.
+
+The full camera is the context; only the current extracted model is presented. Captured sources remain inspectable inside the drawer rather than competing with the model. Camera-ready state dismisses onboarding. Busy captures disable capture/upload actions. Portrait framing scales models to fit, and resizing recenters the model.
+
+Verified the actual browser at desktop and 390×844: drawer open/close and local equation rendering work without console errors; sample cards and floating control wall are absent. Checked and corrected portrait model clipping. No new provider generation or physical headset acceptance is claimed in this UI increment. 99 automated tests pass and production build succeeds.
