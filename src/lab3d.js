@@ -1,4 +1,4 @@
-import {openXRLab} from './xr-lab.js';
+let xrOpening=false;async function openXRLab(options={}){if(xrOpening)return;xrOpening=true;try{const entry='/xr-runtime.bundle.js';const {launchXR}=await import(entry);return await launchXR(options);}catch(e){console.error(e);alert('XR could not start: '+e.message);}finally{xrOpening=false;}}
 import {openCameraLens} from './camera-lens.js';
 import {openLensWorkspace} from './lens-workspace.js';
 const lensStyles=document.createElement('link');lensStyles.rel='stylesheet';lensStyles.href='/lens.css';document.head.append(lensStyles);

@@ -21,7 +21,7 @@ Four authored chapters run without AI: projectile, incline, circuit and quadrati
 
 ## Explicit remaining acceptance gates
 
-- IWSDK is NOT integrated yet. Current code uses native WebXR. The official SDK currently requires a different shared Three runtime; isolate/migrate deliberately instead of introducing two incompatible Three versions into the existing renderer.
+- IWSDK runtime integration is now implemented (see fourth increment). Actual immersive acceptance testing remains pending.
 - Run actual IWER immersive session and record evidence of every hands-only path, including keyboard, selection, grabs, release and exit. Desktop preview alone is not proof.
 - Verify hand-ray/select behavior on target runtime; add near-pinch interactions and ergonomic refinements after testing.
 - Actual diagram illustrations/book pages need further visual work; initial spatial chapters are selectable panels.
@@ -67,3 +67,26 @@ Open http://localhost:4173/#xr or the emulator query route above. Production req
 - Negative-number keyboard key for quadratic edits.
 - XR session visibility pauses animation and releases grabs. Exit ends the immersive session before destroying its renderer.
 - Build and 86 tests pass. Browser/immersive verification is still pending because browser automation was disabled in Work settings at the last attempt. IWSDK integration and hardware performance remain outstanding.
+
+
+## Fourth increment: documented input and SDK gaps
+
+Requirement sources reviewed: the pasted XR implementation brief, the existing XR handoff, and the older Phase 2 developer PDF from Downloads. The standalone newer XR PDF/Word file was not found locally; its exact path has been requested.
+
+| Requirement | Current implementation | Verification / limitation |
+|---|---|---|
+| Meta IWSDK | Pinned 1.1.0-rc.2 World owns scene, camera, renderer, XR entry and ECS update loop | Compiles; immersive/browser execution blocked by Work settings |
+| One Three runtime | App, IWSDK and IWER use the exact super-three 0.185.0 dependency | npm dependency tree verified; existing renderer tests pass |
+| Create from text | Type Create/Build/Construct followed by an experiment description | Bounded server schema, Meta provider, same safety validator; illustrative geometry |
+| Image to scientific model | Image mode defaults to scientific extraction, shows quantities and provenance; confirm/correct before scoring/saving | Existing deterministic solver scope only; inferred data is not a measurement |
+| Image to general 3D | Explicit illustrative image mode retained; source image shown on a spatial panel | General geometry is not a numerical simulation |
+| Runtime loading | XR SDK and emulator have separate browser bundles | SDK bundle size still needs profiling/optimization; normal camera entry does not load SDK |
+| Simulator ownership | Existing animation updates run inside an IWSDK ECS system; no duplicate draw loop | Unit test covers render ownership |
+| Hands-only complete flow | Existing spatial controls, keyboard and hand selection retained | Hardware/emulator walkthrough, upload inside XR and voice accessibility still unverified/incomplete |
+| Submission material | Existing storyboard and eligibility checklist | Approval, actual footage, hardware performance and Devpost submission still pending |
+
+SDK physics/Havok and locomotion are deliberately disabled in this seated version. Authored chapters use validated deterministic scientific solvers. The integration does not claim a general rigid-body sandbox, room anchors, calibrated passthrough scanning or arbitrary exact physics.
+
+90 tests pass; frontend build succeeds. This is implementation evidence, not a claim that headset acceptance checks have passed.
+
+Live Meta text-to-scene check: generated a four-object pendulum scene in 39.3 seconds with a validated successful response. Generation is provider-dependent, not instant. Verified target commands now include double the range, make it stop sliding (a new-release static-friction solution), and halve the current, with target/actual/error feedback.

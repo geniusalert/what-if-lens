@@ -1,1 +1,25 @@
-{"name":"what-if-lens","version":"1.0.0","type":"module","engines":{"node":"22.x"},"scripts":{"dev":"node server.mjs","build":"node build.mjs","test":"node --test tests/*.test.mjs"},"dependencies":{"@iwer/devui":"^2.8.0","iwer":"^2.8.0","three":"^0.187.0"},"devDependencies":{"esbuild":"^0.28.2"}}
+{
+  "name": "what-if-lens",
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "dev": "node server.mjs",
+    "build": "node build.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@iwer/devui": "^2.8.0",
+    "@iwsdk/core": "1.1.0-rc.2",
+    "iwer": "^2.8.0",
+    "three": "npm:super-three@0.185.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  },
+  "overrides": {
+    "three": "npm:super-three@0.185.0"
+  }
+}

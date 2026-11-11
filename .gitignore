@@ -12,3 +12,5 @@ src/assets.generated.js
 .vercel
 
 src/xr-emulator.bundle.js
+
+src/xr-runtime.bundle.js
