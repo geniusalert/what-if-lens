@@ -6,7 +6,7 @@ if(existsSync('.env'))process.loadEnvFile('.env');
 const server=createServer(async(req,res)=>{try{
  const url=new URL(req.url,'http://localhost');
  if(!url.pathname.startsWith('/api/')){
-  const f={'/':'index.html','/style.css':'style.css','/lens.css':'lens.css','/app.js':'app.js','/science.js':'science.js','/studio.js':'studio.js','/lab3d.bundle.js':'lab3d.bundle.js'}[url.pathname];
+  const f={'/':'index.html','/style.css':'style.css','/lens.css':'lens.css','/app.js':'app.js','/science.js':'science.js','/studio.js':'studio.js','/xr-emulator.bundle.js':'xr-emulator.bundle.js','/lab3d.bundle.js':'lab3d.bundle.js'}[url.pathname];
   if(!f){res.writeHead(404);return res.end('Not found');}
   res.setHeader('Cache-Control','no-store');res.setHeader('Content-Type',f.endsWith('.html')?'text/html':f.endsWith('.css')?'text/css':'text/javascript');return res.end(await readFile('src/'+f));
  }

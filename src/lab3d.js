@@ -1,3 +1,4 @@
+import {openXRLab} from './xr-lab.js';
 import {openCameraLens} from './camera-lens.js';
 import {openLensWorkspace} from './lens-workspace.js';
 const lensStyles=document.createElement('link');lensStyles.rel='stylesheet';lensStyles.href='/lens.css';document.head.append(lensStyles);
@@ -80,3 +81,6 @@ function launchCameraMode(){return openLensWorkspace();}
 const primaryNav=document.querySelector('header nav');if(primaryNav)primaryNav.innerHTML='<button data-camera-open>◉ Open Lens <span>LIVE + 3D LAB</span></button><span id="save-count" hidden>0</span>';
 const primaryEntry=document.querySelector('.hero-actions [data-camera-open]');if(primaryEntry)primaryEntry.innerHTML='<span>◉</span> Open Lens <span>↗</span>';
 if(location.hash==='#camera')launchCameraMode();
+
+if(location.hash==='#xr'){if(new URLSearchParams(location.search).get('emulate')==='1'){const entry='/xr-emulator.bundle.js';import(entry).then(({emulatorUI})=>openXRLab({emulatorUI})).catch(e=>{console.error(e);alert('XR emulator failed to initialize. Open without ?emulate=1 for desktop preview.');});}else openXRLab();}
+const xrLink=document.createElement('a');xrLink.href='/#xr';xrLink.textContent='Enter XR textbook ↗';xrLink.style.cssText='position:fixed;right:20px;bottom:20px;z-index:1400;background:#83dfd2;color:#08212c;padding:14px 20px;border-radius:12px';document.body.append(xrLink);

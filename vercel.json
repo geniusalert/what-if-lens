@@ -8,7 +8,7 @@
  "headers":[{"source":"/(.*)","headers":[
   {"key":"X-Content-Type-Options","value":"nosniff"},
   {"key":"Referrer-Policy","value":"same-origin"},
-  {"key":"Permissions-Policy","value":"camera=(self), microphone=(self)"},
+  {"key":"Permissions-Policy","value":"camera=(self), microphone=(self), xr-spatial-tracking=(self)"},
   {"key":"Content-Security-Policy","value":"default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; media-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'self' https://*.chatgpt.com https://chatgpt.com"},
   {"key":"Cache-Control","value":"public, max-age=0, must-revalidate"}
  ]}]

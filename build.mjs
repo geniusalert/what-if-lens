@@ -1,7 +1,8 @@
 import {readFile,mkdir,copyFile,writeFile} from 'node:fs/promises';
 import {build} from 'esbuild';
 await build({entryPoints:['src/lab3d.js'],bundle:true,format:'esm',minify:true,outfile:'src/lab3d.bundle.js',target:'es2022',legalComments:'eof'});
-const files=['index.html','style.css','lens.css','app.js','science.js','studio.js','lab3d.bundle.js'];
+await build({entryPoints:['src/xr-emulator.js'],bundle:true,format:'esm',minify:true,outfile:'src/xr-emulator.bundle.js',target:'es2022'});
+const files=['xr-emulator.bundle.js','index.html','style.css','lens.css','app.js','science.js','studio.js','lab3d.bundle.js'];
 const assets=Object.fromEntries(await Promise.all(files.map(async f=>['/'+(f==='index.html'?'':f),await readFile('src/'+f,'utf8')])));
 await mkdir('dist/public',{recursive:true});
 await Promise.all(files.map(f=>copyFile('src/'+f,'dist/public/'+f)));
