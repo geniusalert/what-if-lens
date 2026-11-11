@@ -83,4 +83,4 @@ const primaryEntry=document.querySelector('.hero-actions [data-camera-open]');if
 if(location.hash==='#camera')launchCameraMode();
 
 if(location.hash==='#xr'){if(new URLSearchParams(location.search).get('emulate')==='1'){const entry='/xr-emulator.bundle.js';import(entry).then(({emulatorUI})=>openXRLab({emulatorUI})).catch(e=>{console.error(e);alert('XR emulator failed to initialize. Open without ?emulate=1 for desktop preview.');});}else openXRLab();}
-const xrLink=document.createElement('a');xrLink.href='/#xr';xrLink.textContent='Enter XR textbook ↗';xrLink.style.cssText='position:fixed;right:20px;bottom:20px;z-index:1400;background:#83dfd2;color:#08212c;padding:14px 20px;border-radius:12px';document.body.append(xrLink);
+const xrLink=document.createElement('a');xrLink.href='/#xr';xrLink.textContent='Enter XR textbook ↗';xrLink.style.cssText='position:fixed;right:20px;bottom:20px;z-index:1400;background:#83dfd2;color:#08212c;padding:14px 20px;border-radius:12px';xrLink.addEventListener('click',e=>{e.preventDefault();history.pushState(null,'','/#xr');openXRLab();});document.body.append(xrLink);

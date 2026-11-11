@@ -44,3 +44,15 @@ node build.mjs --vercel
 npm run dev
 
 Open http://localhost:4173/#xr or the emulator query route above. Production requires HTTPS and xr-spatial-tracking permission. Existing 77 tests and frontend build pass; they do not substitute for the outstanding immersive acceptance test.
+
+
+## Second implementation increment
+
+- Illustrated selectable textbook diagrams on a physical book backing.
+- Validated local prompt grammar, unit checks, halve/double/set/increment operations and circuit switch commands. Unsupported wording cannot silently alter a parameter.
+- Undo history, live numerical feedback, bounded resizing and corrected camera/floor placement.
+- Near-hand pinch selection/grabbing with joint-distance hysteresis; controller rays remain a secondary input.
+- Grabs are released on chapter change, reset/recenter, session end and exit. Single-owner grabbing prevents two inputs fighting over the model.
+- Entry link now opens XR from the existing homepage; repeated entry replaces the old session.
+- 82 tests pass and production bundles compile. Browser verification was attempted but blocked by Work settings (local browser use disabled). Actual IWER/hardware hands-only acceptance and IWSDK migration remain pending, not claimed complete.
+- Entrant supplied a Start application submission confirmation. Approval remains pending.
