@@ -123,3 +123,14 @@ Removed the sample textbook, default chapters, preset variable wall and duplicat
 The full camera is the context; only the current extracted model is presented. Captured sources remain inspectable inside the drawer rather than competing with the model. Camera-ready state dismisses onboarding. Busy captures disable capture/upload actions. Portrait framing scales models to fit, and resizing recenters the model.
 
 Verified the actual browser at desktop and 390×844: drawer open/close and local equation rendering work without console errors; sample cards and floating control wall are absent. Checked and corrected portrait model clipping. No new provider generation or physical headset acceptance is claimed in this UI increment. 99 automated tests pass and production build succeeds.
+
+
+## Eighth increment: MR-first structure and intentional interaction
+
+See VR_FIRST_PLAN.md for the point-by-point request, implementation and acceptance record. The website now has two destinations: spatial MR/VR (default) and Scientific Lab (explicit). Landing content is about everyday objects and spatial interaction, without mathematics-first calls to action. Legacy camera links route into XR.
+
+Removed the spatial control tray. A model-adjacent AI star opens speak/type input; settings remain disclosed on demand. Models initialize paused and AI edits preserve placement and stay paused. Shared XR rendering no longer reframes the head camera on geometry rebuild. Pinch move, two-pinch resize/rotate and movable-part pull are implemented with touch/controller equivalents. Generated mechanism pulling is illustrative timeline scrubbing, not arbitrary exact rigid-body physics. Actual browser pointer pulling verified connected motion and stable release.
+
+Mixed reality is the default session selection. Home entry requests a session directly from the click; browser/device permission is still required. Optional WebXR raw-camera capture is implemented for devices exposing camera pixels; the path is unverified on hardware. Passthrough alone does not imply raw camera availability. Ordinary phone RGB finger recognition is not implemented. Headset hand tracking and microphone capture still need hardware checks.
+
+103 automated tests pass and Vercel build succeeds. Desktop/mobile visual checks and routes passed without console errors. This is code/browser evidence, not complete hardware acceptance.

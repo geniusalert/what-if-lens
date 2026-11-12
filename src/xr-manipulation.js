@@ -1,0 +1,14 @@
+import * as THREE from 'three';
+import {sceneObjectState} from './scene-graph.js';
+export function scaledDistance(initialScale,initialDistance,currentDistance){if(![initialScale,initialDistance,currentDistance].every(Number.isFinite)||initialDistance<.005)return initialScale;return Math.max(.01,Math.min(4,initialScale*currentDistance/initialDistance));}
+export function closestMotionTime(node,target,nearTime=0){let best=nearTime,error=Infinity;for(let i=0;i<=120;i++){const t=node.motion.period*i/120,p=sceneObjectState(node,t).position,d=p.reduce((s,v,j)=>s+(v-target[j])**2,0)+1e-9*Math.abs(t-nearTime);if(d<error){error=d;best=t;}}return best;}
+// All transforms stay under the scene root. No reparenting snaps or implicit playback.
+export function createXRManipulation({lens,onTime,onPause,getTime}){
+ let gesture=null;
+ const bounds=()=>new THREE.Box3().setFromObject(lens.group).expandByScalar(.07);
+ function begin(points){if(!points.length)return;onPause();const a=points[0],local=lens.group.worldToLocal(a.clone());let part=null;for(const item of lens.generated||[]){if(!['oscillate','path'].includes(item.node.motion.type)||!['box','sphere','cylinder'].includes(item.node.primitive))continue;if(new THREE.Box3().setFromObject(item.holder).expandByScalar(.04).containsPoint(a)){part=item;break;}}gesture={count:points.length,point:a.clone(),position:lens.group.position.clone(),scale:lens.group.scale.x,rotation:lens.group.quaternion.clone(),local,part,time:getTime()};if(points.length===2){gesture.mid=a.clone().add(points[1]).multiplyScalar(.5);gesture.vector=points[1].clone().sub(a);gesture.distance=gesture.vector.length();gesture.part=null;}}
+ function update(points,{force=false}={}){if(!points.length){gesture=null;return;}if(!gesture){if(!force&&!points.some(p=>bounds().containsPoint(p)))return;begin(points);}if(gesture.count!==points.length)begin(points);const g=gesture;if(points.length===2){const mid=points[0].clone().add(points[1]).multiplyScalar(.5),vector=points[1].clone().sub(points[0]),scale=scaledDistance(g.scale,g.distance,vector.length()),q=new THREE.Quaternion().setFromUnitVectors(g.vector.clone().normalize(),vector.clone().normalize());lens.group.scale.setScalar(scale);lens.group.quaternion.copy(q.multiply(g.rotation));lens.group.position.copy(g.position).sub(g.mid).multiplyScalar(scale/g.scale).applyQuaternion(new THREE.Quaternion().setFromUnitVectors(g.vector.clone().normalize(),vector.clone().normalize())).add(mid);}
+ else if(g.part){const delta=lens.group.worldToLocal(points[0].clone()).sub(g.local),item=g.part,base=sceneObjectState(item.node,g.time).position,target=base.map((v,j)=>v+delta.getComponent(j)/(j===0?item.ux:j===1?-item.uy:item.uz));onTime(closestMotionTime(item.node,target,getTime()));}
+ else lens.group.position.copy(g.position).add(points[0].clone().sub(g.point));}
+ return {update,reset(){gesture=null;},get active(){return !!gesture;}};
+}
