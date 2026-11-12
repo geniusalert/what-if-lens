@@ -6,6 +6,7 @@ if(existsSync('.env'))process.loadEnvFile('.env');
 const server=createServer(async(req,res)=>{try{
  const url=new URL(req.url,'http://localhost');
  if(!url.pathname.startsWith('/api/')){
+  if(/^\/handtracking\/(vision_wasm_(?:module_)?internal\.(?:js|wasm)|hand_landmarker\.task)$/.test(url.pathname)){res.setHeader('Content-Type',url.pathname.endsWith('.wasm')?'application/wasm':url.pathname.endsWith('.js')?'text/javascript':'application/octet-stream');return res.end(await readFile('src'+url.pathname));}
   const f={'/':'index.html','/style.css':'style.css','/lens.css':'lens.css','/app.js':'app.js','/science.js':'science.js','/studio.js':'studio.js','/xr-runtime.bundle.js':'xr-runtime.bundle.js','/xr-emulator.bundle.js':'xr-emulator.bundle.js','/lab3d.bundle.js':'lab3d.bundle.js'}[url.pathname];
   const shared=/^\/lens-shared-[A-Z0-9]+\.js$/.test(url.pathname)?url.pathname.slice(1):null;
   if(!f&&!shared){res.writeHead(404);return res.end('Not found');}

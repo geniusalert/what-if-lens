@@ -1,3 +1,5 @@
+> Update: local phone-camera finger tracking has since been implemented; see the ninth increment in XR_HANDOFF.md for current behavior and verification.
+
 # VR-first transition: plan and acceptance
 
 1. **Two destinations:** replace mathematics-led landing content with Mixed Reality / VR and Scientific Lab. Open Lens and legacy #camera enter the spatial workspace. #lab opens only the scientific lab. Retain a #home introduction with both destinations and direct immersive entry.

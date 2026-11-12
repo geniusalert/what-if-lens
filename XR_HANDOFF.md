@@ -134,3 +134,16 @@ Removed the spatial control tray. A model-adjacent AI star opens speak/type inpu
 Mixed reality is the default session selection. Home entry requests a session directly from the click; browser/device permission is still required. Optional WebXR raw-camera capture is implemented for devices exposing camera pixels; the path is unverified on hardware. Passthrough alone does not imply raw camera availability. Ordinary phone RGB finger recognition is not implemented. Headset hand tracking and microphone capture still need hardware checks.
 
 103 automated tests pass and Vercel build succeeds. Desktop/mobile visual checks and routes passed without console errors. This is code/browser evidence, not complete hardware acceptance.
+
+
+## Ninth increment: phone finger tracking and calibrated pinch
+
+User confirmed the failing path is the phone camera preview. Previously this path had no camera finger detector; WebXR-only hand joints could never drive it. Added pinned MediaPipe Tasks Vision 1.2.3 and a versioned local Hand Landmarker model, self-hosted with its WASM runtime. Continuous hand frames stay on the device. No provider calls are made for hand tracking.
+
+When Photo camera is live, the detector updates up to about 15 times/second. A visible cursor and tracking badge indicate hand detection, pinch and two-pinch interaction. Image landmarks map to the model plane, enabling preview move/pull/resize/rotate; this is not real-world depth registration. Capture an object, keep the video feed live, show the whole hand, align the cursor with the model and pinch. Camera aspect ratio is accounted for. Calibration samples open-hand then closed pinch, uses hand-size-normalized distances and hysteresis, and rejects missing/stale tracking. Opening the assistant suspends object manipulation.
+
+Also improved XR: read authoritative XRFrame joint poses in the SDK rig coordinate system, preserve SDK-owned hand/controller parenting, honor native hand select events, add distance point-and-pinch rather than requiring physical reach, and release grabs on tracking loss. Near interactions and UI pinch consumption remain supported.
+
+Verification: unit tests cover frame-origin transforms, missing poses, calibration validity, normalized ratios, far pinch, tracking-loss release, UI consumption, controller ownership and camera coordinates. Actual browser detector initialized and detected 2 hands in Google's official right_hands.jpg fixture through a canvas-to-video capture stream. This proves real local inference, not a live phone-camera hardware walkthrough. Library emits informational native runtime warnings (including the XNNPACK CPU delegate message via console.error); the fixture detection succeeded. Physical phone performance and headset hand tracking still require user-device validation.
+
+References: https://developers.meta.com/vr/documentation/web/webxr-hands/ and https://developers.google.com/edge/mediapipe/solutions/vision/hand_landmarker?tab=Web . Model provenance and SHA256: src/handtracking/MODEL_SOURCE.md.

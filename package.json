@@ -13,6 +13,7 @@
   "dependencies": {
     "@iwer/devui": "^2.8.0",
     "@iwsdk/core": "1.1.0-rc.2",
+    "@mediapipe/tasks-vision": "1.2.3",
     "iwer": "^2.8.0",
     "three": "npm:super-three@0.185.0"
   },

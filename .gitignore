@@ -15,3 +15,5 @@ src/xr-emulator.bundle.js
 
 src/xr-runtime.bundle.js
 src/lens-shared-*.js
+
+src/handtracking/vision_wasm_*

@@ -4,7 +4,7 @@ import {World,createSystem,SessionMode,buildSessionInit} from '@iwsdk/core';
 import {openXRLab} from './xr-lab.js';
 export async function launchXR(options={}){return openXRLab({...options,runtimeFactory:async host=>{
  const world=await World.create(host,{xr:{sessionMode:SessionMode.ImmersiveAR,offer:'none',features:{handTracking:true}},render:{camera:{position:[0,1.6,2.6]}},features:{locomotion:false,grabbing:false,spatialUI:false,physics:false},input:{canvasPointerEvents:false}});
- const runtime={scene:world.scene,camera:world.camera,renderer:world.renderer,tick:null,dispose(){world.destroy();world.renderer.dispose();world.renderer.forceContextLoss();world.renderer.domElement.remove();}};
+ const runtime={origin:world.player,scene:world.scene,camera:world.camera,renderer:world.renderer,tick:null,dispose(){world.destroy();world.renderer.dispose();world.renderer.forceContextLoss();world.renderer.domElement.remove();}};
  class ExperimentSystem extends createSystem({}){update(delta,time){runtime.tick?.(time*1000);}}
  world.registerSystem(ExperimentSystem);
  const entries=document.createElement('div');entries.style.cssText='display:flex;gap:5px;align-items:center';const select=document.createElement('select');select.setAttribute('aria-label','Immersive mode');select.innerHTML='<option value="immersive-ar">Mixed reality</option><option value="immersive-vr">VR</option>';const button=document.createElement('button');button.textContent='Enter';button.disabled=true;entries.append(select,button);const support={};
