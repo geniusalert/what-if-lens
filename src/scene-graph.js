@@ -14,6 +14,12 @@ export function validateSceneGraph(input){
   const m=n.motion;if(!m||!['none','oscillate','rotate','pulse','path','flow'].includes(m.type)||!vector(m.axis,-1,1)||!Number.isFinite(m.amplitude)||m.amplitude<0||m.amplitude>.5||!Number.isFinite(m.period)||m.period<.5||m.period>30||!Number.isFinite(m.phase)||Math.abs(m.phase)>6.3)throw Error('Invalid generated motion.');
   if(['line','arrow'].includes(n.primitive)&&n.points.length<2)throw Error('A line or arrow needs endpoints.');if((m.type==='path'||m.type==='flow')&&n.points.length<2)throw Error('Path motion needs a visible path.');if(n.primitive!=='text'&&((m.type==='rotate'&&m.axis.some(v=>v!==0))||m.type==='path'||(m.type==='flow'&&n.primitive==='line')||(m.type==='oscillate'&&m.amplitude>0&&m.axis.some(v=>v!==0))||(m.type==='pulse'&&m.amplitude>0)))moving++;
  }
+ for(const node of input.objects){
+  const validTarget=id=>id!==node.id&&ids.has(id);
+  if(node.attachments!==undefined && (node.primitive!=='line'||!Array.isArray(node.attachments)||node.attachments.length>64||node.attachments.some(a=>!a||!Number.isInteger(a.index)||a.index<0||a.index>=node.points.length||!validTarget(a.id))||new Set(node.attachments.map(a=>a.index)).size!==node.attachments.length))throw Error('Invalid rope attachments.');
+  if(node.follow!==undefined&&(node.primitive!=='arrow'||!validTarget(node.follow)))throw Error('Invalid force attachment.');
+  if(node.rollOnRope!==undefined&&(node.primitive!=='torus'||![-1,1].includes(node.rollOnRope)))throw Error('Invalid pulley rotation.');
+ }
  if(input.annotations!==undefined)input.annotations=validateAnnotations(input.annotations);
  if(!moving||!input.objects.some(n=>!['text','line','arrow'].includes(n.primitive)))throw Error('The generated scene needs actual animated 3D objects.');return structuredClone(input);
 }
@@ -23,6 +29,7 @@ export function sceneObjectState(node,time){
  if(m.type==='rotate')for(let i=0;i<3;i++)rotation[i]+=m.axis[i]*angle;
  if(m.type==='pulse')scale=1+Math.min(.45,m.amplitude)*Math.sin(angle);
  if(m.type==='path'){const f=(1-Math.cos(angle))/2*(node.points.length-1),i=Math.min(node.points.length-2,Math.floor(f)),u=f-i;for(let j=0;j<3;j++)position[j]=node.points[i][j]*(1-u)+node.points[i+1][j]*u;}
+ if(node.rollOnRope)rotation[2]+=node.rollOnRope*(position[1]-node.position[1])/(node.size[1]/2);
  return {position,rotation,scale};
 }
 export function samplePulleyScene(){
