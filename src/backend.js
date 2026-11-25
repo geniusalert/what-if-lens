@@ -4,7 +4,7 @@ import {checkBudget,scientificRoute} from './scientific-api.js';
 import {defaults,validate,solve} from './science.js';
 import {visionRoute} from './vision.js';
 import {lensRoute} from './lens-api.js';
-import {sceneRoute} from './scene-api.js';
+import {compareSceneRoute,sceneRoute} from './scene-api.js';
 const json=(v,status=200)=>new Response(JSON.stringify(v),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 const cameraReplies=new Map();
 const replyKey=request=>{const id=request.headers.get('X-Camera-Request-Id');return id&&/^[a-f0-9-]{36}$/i.test(id)?id:null;};
@@ -13,8 +13,9 @@ export default {async fetch(request,env={}){
  const path=new URL(request.url).pathname;
  if(path==='/api/lens/edit')return lensRoute(request,env);
  if(path==='/api/status')return json({vision:!!(env.MODEL_API_KEY||env.OPENROUTER_API_KEY),meta:!!env.MODEL_API_KEY,openrouter:!!env.OPENROUTER_API_KEY,model:env.META_MODEL||'muse-spark-1.3'});
- if(path==='/api/classify'||path==='/api/animate'||path==='/api/lens/scene'){try{
-  const execute=req=>path==='/api/lens/scene'?sceneRoute(req,env):visionRoute(req,env,path),budget=()=>{if(path!=='/api/lens/scene')checkBudget(request,env);};
+ if(path==='/api/classify'||path==='/api/animate'||path==='/api/lens/scene'||path==='/api/lens/compare'){try{
+  const scene=path.startsWith('/api/lens/');
+  const execute=req=>path==='/api/lens/compare'?compareSceneRoute(req,env):scene?sceneRoute(req,env):visionRoute(req,env,path),budget=()=>{if(!scene)checkBudget(request,env);};
   const id=replyKey(request),now=Date.now();
   if(!id){budget();return execute(request);}
   const raw=await request.text();if(raw.length>7000000)return json({error:'Image too large.'},413);

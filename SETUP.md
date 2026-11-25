@@ -27,6 +27,16 @@ Set optional `META_MODEL=muse-spark-1.3`. Leave `OPENROUTER_API_KEY` unset for a
 
 `AI_REQUESTS_PER_HOUR` defaults to 12 per observed client identity/IP per Worker instance. These are best-effort process-local limits, not a distributed billing cap. Set the provider account's spending limits before a large public event.
 
+## Compare Meta and Gemini
+
+1. In Google AI Studio, create an API key in a project on the **Free** tier. Its active request and input-token limits are shown on the [Rate limits page](https://aistudio.google.com/rate-limit).
+2. Add `GEMINI_API_KEY` to the ignored local `.env` and restart the app. On Vercel, add it as a sensitive **Production** variable and redeploy. The existing `MODEL_API_KEY` is used for Meta.
+3. Open [Comparison](https://what-if-lens.vercel.app/#compare), upload or capture a photo, then choose **Compare models**. In XR, **Captured photo → Compare this photo** reuses that exact image.
+
+Comparison defaults to Muse Wonder 1.0 and Gemini 4 Hydrogen. Use `META_COMPARISON_MODEL` or `GEMINI_MODEL` to override either model. Setting `META_SCENE_MODEL=muse-wonder-1.0` separately switches ordinary illustrative 3D generation to Wonder. Wonder has higher token pricing than Spark. [Meta pricing](https://dev.meta.ai/docs/pricing-rate-limits)
+
+Each comparison makes one request to each provider with the same image and scene instructions. Google quotas are shared by the project across its API keys and can limit requests per minute, input tokens per minute, or requests per day. The daily quota resets at midnight Pacific time. A Google quota error appears on its own result card, and Comparison makes no automatic retries or paid fallbacks. Google may use free-tier inputs and outputs to improve its products. [Google rate limits](https://aistudio.google.com/docs/rate-limits) · [Gemini 4 Hydrogen pricing](https://aistudio.google.com/docs/pricing#gemini-4-hydrogen)
+
 ## Prove the live path
 
 1. Choose a new diagram from `fixtures/` or photograph your own supported problem.
