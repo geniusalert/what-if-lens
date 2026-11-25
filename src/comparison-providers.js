@@ -1,7 +1,7 @@
 export function comparisonConfig(env){
  return {
   meta:{provider:'Meta',model:env.META_COMPARISON_MODEL||'muse-wonder-1.0',configured:!!env.MODEL_API_KEY},
-  gemini:{provider:'Google',model:env.GEMINI_MODEL||'gemini-4-hydrogen',configured:!!env.GEMINI_API_KEY}
+  gemini:{provider:'Google',model:env.GEMINI_MODEL||'gemini-3.1-flash-lite',configured:!!env.GEMINI_API_KEY}
  };
 }
 
@@ -47,25 +47,43 @@ export async function generateComparison({config,key,system,prompt,image,schema,
    contents:[{role:'user',parts:[{text:prompt},{inlineData:{mimeType,data:base64}}]}],
    generationConfig:{maxOutputTokens:10000,responseMimeType:'application/json',responseJsonSchema:schema}
   };
-  const response=await fetch(url,{
+  const send=body=>fetch(url,{
    method:'POST',signal:combined,headers:{'Content-Type':'application/json',...credentials},
-   body:JSON.stringify(meta?metaInput:googleInput)
+   body:JSON.stringify(body)
   });
-  const data=await response.json().catch(()=>null);
-  if(!response.ok){
-   const retryAfter=response.status===429?retrySeconds(response,data):undefined;
-   return error(response.status,providerProblem(response.status,provider,retryAfter),retryAfter);
-  }
-  const choice=data?.candidates?.[0];
-  const content=meta?data?.choices?.[0]?.message?.content:choice?.content?.parts?.filter(part=>!part.thought&&typeof part.text==='string').map(part=>part.text).join('');
-  if(!content)return error(422,provider+' returned no usable scene.');
-  const tokens=meta?data.usage?.completion_tokens:data.usage?.candidatesTokenCount;
-  try{
-   const value=validate(JSON.parse(content));
-   if(!value)return error(422,provider+' could not identify a clear subject in the photo.');
-   return {provider,model,ms:elapsed(),value,...(Number.isFinite(tokens)?{outputTokens:tokens}:{})};
-  }catch{
-   return error(422,provider+' returned a scene that could not be rendered.');
+  let corrected=false;
+  let outputTokens=0;
+  while(true){
+   const response=await send(meta?metaInput:googleInput);
+   const data=await response.json().catch(()=>null);
+   if(!response.ok){
+    const retryAfter=response.status===429?retrySeconds(response,data):undefined;
+    return error(response.status,providerProblem(response.status,provider,retryAfter),retryAfter);
+   }
+   const choice=data?.candidates?.[0];
+   const content=meta?data?.choices?.[0]?.message?.content:choice?.content?.parts?.filter(part=>!part.thought&&typeof part.text==='string').map(part=>part.text).join('');
+   if(!meta&&choice?.finishReason&&!['STOP','MAX_TOKENS'].includes(choice.finishReason))return error(422,'Google stopped generation before completing the scene.');
+   if(!content&&choice?.finishReason!=='MAX_TOKENS')return error(422,provider+' returned no usable scene.');
+   const tokens=meta?data.usage?.completion_tokens:data.usageMetadata?.candidatesTokenCount;
+   if(Number.isFinite(tokens))outputTokens+=tokens;
+   try{
+    if(choice?.finishReason==='MAX_TOKENS')throw Error('The scene exceeded the output limit.');
+    const value=validate(JSON.parse(content));
+    if(!value)return error(422,provider+' could not identify a clear subject in the photo.');
+    return {provider,model,ms:elapsed(),value,...(outputTokens?{outputTokens}:{}),...(corrected?{corrected:true}:{})};
+   }catch(problem){
+    if(meta)return error(422,provider+' returned a scene that could not be rendered.');
+    // JSON parser messages can include model text. Only use our validator's
+    // diagnostic, never the raw response, in the user-facing message.
+    const issue=problem instanceof SyntaxError?'The scene JSON was incomplete.':
+     problem instanceof TypeError?'A required scene field was missing.':problem.message;
+    if(corrected)return error(422,'Google could not finish the 3D scene after one correction. '+issue);
+    corrected=true;
+    const feedback={text:'Return a complete corrected scene for the original photo. Renderer feedback: '+issue+' Keep the geometry compact. Use empty annotations and scientific inputs when they do not apply. Preserve the visible subject and include meaningful motion.'};
+    if(content&&content.length<=48000&&choice?.finishReason!=='MAX_TOKENS'){
+     googleInput.contents.push({role:'model',parts:[{text:content}]},{role:'user',parts:[feedback]});
+    }else googleInput.contents[0].parts.push(feedback);
+   }
   }
  }catch(e){
   if(e.name==='TimeoutError')return error(504,provider+' timed out.');

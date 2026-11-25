@@ -130,7 +130,7 @@ export function openModelComparison({image='',photoName='Captured photo'}={}){
   details.hidden=false;
   details.querySelector('strong').textContent=result.value.title;
   details.querySelector('p').textContent=result.value.description;
-  details.querySelector('small').textContent=(result.ms/1000).toFixed(1)+' s · '+result.value.objects.length+' scene objects';
+  details.querySelector('small').textContent=(result.ms/1000).toFixed(1)+' s · '+result.value.objects.length+' scene objects'+(result.corrected?' · corrected on second request':'');
   let renderer;
   try{
    renderer=new LensScene(viewport);

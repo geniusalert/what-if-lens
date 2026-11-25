@@ -23,12 +23,16 @@ test('each model sees the same image and instructions and creates its own result
  assert.equal(calls.length,2);
  const [meta,gemini]=calls;
  assert.equal(meta.body.model,'muse-wonder-1.0');
- assert.match(gemini.url,/\/gemini-4-hydrogen:generateContent$/);
+ assert.match(gemini.url,/\/gemini-3.1-flash-lite:generateContent$/);
  assert.equal(meta.body.messages[1].content[1].image_url.url,image);
  assert.deepEqual(gemini.body.contents[0].parts[1].inlineData,{mimeType:'image/png',data:'cGhvdG8='});
  assert.equal(meta.body.messages[0].content,gemini.body.systemInstruction.parts[0].text);
  assert.equal(meta.body.messages[1].content[0].text,gemini.body.contents[0].parts[0].text);
- assert.deepEqual(meta.body.response_format.json_schema.schema,gemini.body.generationConfig.responseJsonSchema);
+ const geometry=gemini.body.generationConfig.responseJsonSchema.properties.objects.items.properties;
+ assert.equal(geometry.position.minItems,3);
+ assert.equal(geometry.position.maxItems,3);
+ assert.equal(geometry.motion.properties.amplitude.maximum,.5);
+ assert.deepEqual(geometry.primitive,meta.body.response_format.json_schema.schema.properties.objects.items.properties.primitive);
  assert.equal(meta.headers.Authorization,'Bearer '+env.MODEL_API_KEY);
  assert.equal(gemini.headers['x-goog-api-key'],env.GEMINI_API_KEY);
  const result=await a.json();
@@ -63,4 +67,43 @@ test('missing credentials and invalid input never spend either provider quota',a
  assert.equal(config.gemini.configured,true);
  assert.ok(!JSON.stringify(config).includes('secret'));
  assert.equal(calls.mock.callCount(),0);
+});
+
+test('Gemini corrects rejected geometry using its own draft and the original image',async t=>{
+ const drafts=[];
+ const invalid=structuredClone(scene);
+ invalid.objects[0].position=[.5,.5];
+ let metaCalls=0;
+ t.mock.method(globalThis,'fetch',async(url,options)=>{
+  if(url.includes('meta.ai')){
+   metaCalls++;
+   return Response.json({choices:[{message:{content:JSON.stringify({...scene,title:'Meta only'})}}]});
+  }
+  drafts.push(JSON.parse(options.body));
+  const value=drafts.length===1?invalid:scene;
+  return Response.json({candidates:[{finishReason:'STOP',content:{parts:[{text:JSON.stringify(value)}]}}],usageMetadata:{candidatesTokenCount:100}});
+ });
+ const {meta,gemini}=await (await worker.fetch(request(),env)).json();
+ assert.equal(metaCalls,1);
+ assert.equal(drafts.length,2);
+ assert.deepEqual(drafts[0].contents[0],drafts[1].contents[0]);
+ assert.deepEqual(JSON.parse(drafts[1].contents[1].parts[0].text),invalid);
+ assert.match(drafts[1].contents[2].parts[0].text,/Invalid generated object/);
+ assert.equal(gemini.value.title,scene.title);
+ assert.equal(gemini.corrected,true);
+ assert.equal(gemini.outputTokens,200);
+ assert.equal(meta.value.title,'Meta only');
+});
+
+test('a truncated Gemini reply gets at most one correction and reports the reason',async t=>{
+ let calls=0;
+ t.mock.method(globalThis,'fetch',async url=>{
+  if(url.includes('meta.ai'))return Response.json({},{status:503});
+  calls++;
+  return Response.json({candidates:[{finishReason:'MAX_TOKENS',content:{parts:[{text:'{"objects":'}]}}]});
+ });
+ const {gemini}=await (await worker.fetch(request(),env)).json();
+ assert.equal(calls,2);
+ assert.equal(gemini.code,422);
+ assert.match(gemini.error,/output limit/);
 });

@@ -10,6 +10,22 @@ photoSchema.properties.subject={type:'string',enum:['visible','unclear','compoun
 photoSchema.required.push('subject');
 const comparisonSchema=structuredClone(photoSchema);
 comparisonSchema.properties.subject.enum=['visible','unclear'];
+// Gemini can enforce these renderer limits while generating. Keep the Meta
+// schema compatible with its own structured-output implementation.
+const googleSchema=structuredClone(comparisonSchema);
+const numberRange=(minimum,maximum)=>({type:'number',minimum,maximum});
+const tuple=(length,min,max)=>({type:'array',minItems:length,maxItems:length,items:numberRange(min,max)});
+const geometry=googleSchema.properties.objects.items.properties;
+geometry.position=tuple(3,-.5,1.5);
+geometry.points.items=tuple(3,-.5,1.5);
+geometry.size=tuple(3,.003,1.5);
+geometry.rotation=tuple(3,-6.3,6.3);
+Object.assign(geometry.motion.properties,{
+ axis:tuple(3,-1,1),amplitude:numberRange(0,.5),period:numberRange(.5,30),phase:numberRange(-6.3,6.3)
+});
+const annotation=googleSchema.properties.annotations.properties;
+annotation.paths.items.properties.points.items=tuple(2,0,1);
+annotation.occluders.items.items=tuple(2,0,1);
 const photoInstruction=`
 First inspect the actual image and set subject. Use unclear when the photo contains only texture, blur, an empty background, or an unidentifiable fragment. An incidental background texture or piece of interface is not the subject. If a camera target is provided, prefer the recognizable subject around the center, while considering the whole image for context. If the image includes a browser or search page, prioritize its large active image or main open diagram and ignore result thumbnails and screen chrome. Do not synthesize a mechanism from an unclear image.
 Use compound_pulley ONLY when the diagram shows an upward pull on the axle of the upper pulley, an upper rope with one grounded end and the other attached to the lower pulley axle, and a distinct lower rope connecting two masses. Circles linked by a rope to rectangular hanging masses are pulleys, not a rotary feeder. Keep other types of pulley arrangements as visible and model their own parts.
@@ -86,10 +102,9 @@ export async function compareSceneRoute(request,env){
  if(body.question!==undefined&&(typeof body.question!=='string'||body.question.length>400))return reply({error:'Use a question under 400 characters.'},400);
  try{checkBudget(request,env);}catch(e){return reply({error:e.message},429);}
  const shared={system:instruction+comparisonInstruction,prompt:imagePrompt({question:body.question}),image:body.image,schema:comparisonSchema,signal:request.signal,validate:validateComparedPhoto};
- // Each provider gets one attempt and the same input. A failed run remains visible.
  const [meta,gemini]=await Promise.all([
   generateComparison({...shared,config:config.meta,key:env.MODEL_API_KEY}),
-  generateComparison({...shared,config:config.gemini,key:env.GEMINI_API_KEY})
+  generateComparison({...shared,schema:googleSchema,config:config.gemini,key:env.GEMINI_API_KEY})
  ]);
  return reply({meta,gemini});
 }
