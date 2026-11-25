@@ -1,4 +1,3 @@
-import {openModelComparison} from './model-comparison.js';
 import {handSourceMode,createMRHandTracker,samplesOnModelPlane} from './hand-source.js';
 import {captureXRFrame,disposeXRFrameReader} from './xr-raw-camera.js';
 import {readXRHands} from './hand-tracking.js';
@@ -118,7 +117,7 @@ export async function openXRLab({emulatorUI=null,runtimeFactory=null,enterOnLaun
     status('Scientific model ready. Review the values in Workspace settings.');
    }else{
     lens.setScene(data.value);graph=data.value;
-    status(graph.title+' · Drag to inspect. Use the AI star to explore changes.');
+    status(graph.objects.some(n=>n.pulleyContact)?'Grab a gold rope end and pull down to lift the mass.':graph.title+' · Drag to inspect. Use the AI star to explore changes.');
    }
    fit();restoreCamera();
   }catch(e){
@@ -141,7 +140,6 @@ export async function openXRLab({emulatorUI=null,runtimeFactory=null,enterOnLaun
  root.querySelector('#xr-form').onsubmit=e=>{e.preventDefault();apply(e.target.querySelector('input').value);};
  const stageResize=new ResizeObserver(()=>{if(!renderer.xr.isPresenting)updateAgent();});stageResize.observe(host);
  function close(){if(closed)return;stageResize.disconnect();releaseGrabs();closed=true;cardboard.dispose();disposeXRFrameReader(renderer);mrHands.reset();handRevision++;handDetector?.dispose();handInteraction.reset();cursors.forEach(c=>{c.geometry.dispose();c.material.dispose();scene.remove(c);});clearTimeout(caption.userData.timer);sourceControls.dispose();recognition?.abort();request?.abort();if(runtime)runtime.tick=null;else renderer.setAnimationLoop(null);const session=renderer.xr.getSession();root.remove();background.forEach(([e,inert])=>e.inert=inert);document.body.style.overflow=oldOverflow;if(location.hash==='#xr')window.history.replaceState(null,'',location.pathname+location.search);activeXR=null;const cleanup=()=>{ui.traverse(o=>{o.geometry?.dispose();o.material?.map?.dispose();o.material?.dispose();});lens.dispose();runtime?.dispose();};if(session)session.end().catch(()=>{}).finally(cleanup);else cleanup();}
- root.querySelector('#xr-photo-compare').onclick=()=>{const image=root.querySelector('#xr-source-preview').getAttribute('src');if(image){close();openModelComparison({image});}};
  root.querySelector('#xr-close').onclick=close;status('Take a photo, upload, or enter mixed reality to capture.');const tick=now=>{if(closed)return;emulatorUI?.render(now);updateNearHands();const dt=last?Math.min(.1,(now-last)/1000):0;last=now;if(playing&&!document.hidden&&xrVisible){time=Math.min(duration(),time+dt*playbackSpeed);if(time>=duration())playing=false;}sourceControls.update?.();updateTransport(now);lens.render(time);cardboard.render();updateAgent();};if(runtime)runtime.tick=tick;else renderer.setAnimationLoop(tick);
  if(enterOnLaunch)runtime?.enter?.();activeXR={close};return activeXR;
 }

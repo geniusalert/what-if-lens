@@ -13,7 +13,7 @@ export function validateMotionPlan(p){
 }
 function providers(env,body){const list=[];const meta=env.MODEL_API_KEY;const router=env.OPENROUTER_API_KEY;
  if(meta)list.push({name:'Meta',key:meta,url:'https://api.meta.ai/v1/chat/completions',model:env.META_MODEL||'muse-spark-1.3'});
- if(router&&(!meta||body.allowFallback===true||env.ALLOW_OPENROUTER_FALLBACK==='true'))list.push({name:'OpenRouter',key:router,url:'https://openrouter.ai/api/v1/chat/completions',model:env.OPENROUTER_MODEL||'google/gemini-2.5-flash'});
+ if(router&&env.OPENROUTER_MODEL&&(!meta||body.allowFallback===true||env.ALLOW_OPENROUTER_FALLBACK==='true'))list.push({name:'OpenRouter',key:router,url:'https://openrouter.ai/api/v1/chat/completions',model:env.OPENROUTER_MODEL});
  return list;
 }
 export async function infer(env,body,schema,name,instruction){
