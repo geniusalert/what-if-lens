@@ -97,10 +97,22 @@ export function mountXRSource({root,renderer,scene,lens,hasModel,onReset,onCaptu
  updateControls();
  return {
   get video(){return video;},
+  async startHandsCamera(){
+   options.querySelector('[data-environment]').checked=true;
+   if(!ready)await source.start();
+   environment();updateControls();
+  },
+  previewUV(uv){return {x:(uv.x-texture.offset.x)/texture.repeat.x,y:(uv.y-texture.offset.y)/texture.repeat.y};},
   get cameraReady(){return ready;},
   stopCamera(){source.stop();},
   capture,
   update(){
+   if(ready&&!renderer.xr.isPresenting&&video.videoWidth){
+    const viewport=renderer.domElement;
+    const aspect=viewport.clientWidth/(viewport.clientHeight||1);
+    const ratio=aspect/(video.videoWidth/video.videoHeight);
+    if(ratio>0){texture.repeat.set(Math.min(1,ratio),Math.min(1,1/ratio));texture.offset.set((1-texture.repeat.x)/2,(1-texture.repeat.y)/2);}
+   }
    if(pendingCapture===null)return;
    const current=pendingCapture;
    pendingCapture=null;
